@@ -1,0 +1,15 @@
+Necesito un algoritmo de "word wrapping" (ajuste de línea) en C#.
+
+Objetivo:
+Escribí un método con la firma:
+
+    string Wrap(string text, int maximumLineLength)
+
+Comportamiento esperado en esta primera versión:
+- Dividir el texto en líneas cuya longitud no supere maximumLineLength caracteres.
+- Cortar preferentemente entre palabras (en los espacios), no en medio de una palabra.
+- Separar las líneas con saltos de línea.
+
+Mantenelo lo más simple posible: una sola clase, sin dependencias externas,
+sin logging ni configuración. Devolveme solo el código del método y una breve
+explicación de cómo funciona.

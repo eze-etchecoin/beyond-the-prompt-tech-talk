@@ -1,0 +1,14 @@
+Ahora quiero una separación de responsabilidades más clara. Reorganizá el código así:
+
+1. La lógica de dominio del word wrapping debe vivir en una clase reutilizable
+   (por ejemplo, WordWrapper) dentro de una biblioteca de clases, sin ninguna
+   dependencia de consola.
+2. La entrada/salida (leer argumentos, imprimir el resultado) debe vivir en un
+   proyecto de consola separado que use esa biblioteca.
+3. Los tests deben ir en un proyecto de tests aparte y describir el comportamiento
+   observable (no detalles internos de implementación).
+
+Mantené la implementación simple y fácil de explicar en vivo: sin logging,
+sin inyección de dependencias, sin hosting ni configuración.
+
+Explicame la estructura de proyectos resultante y qué responsabilidad tiene cada uno.
