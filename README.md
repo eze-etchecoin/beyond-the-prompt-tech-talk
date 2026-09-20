@@ -38,20 +38,27 @@ La charla recorre una evolución conceptual sobre cómo colaboramos con agentes 
 | `prompts/04-loop-engineering/` | Placeholder documentado. | Demo de Loop Engineering. |
 | `prompts/05-graph-engineering/` | Placeholder documentado. | Demo de Graph Engineering. |
 | `src/ContextEngineering/` | Solución de word wrapping (Core + Console). | Código base de la demo de contexto. |
-| `src/PromptEngineering/`, `src/HarnessEngineering/`, `src/LoopEngineering/`, `src/GraphEngineering/` | Placeholders documentados. | Ejemplos futuros. |
+| `src/Minesweeper/` | Minesweeper (Core + Console), base compartida. | Demos de Harness, Loop y Graph. |
+| `src/PromptEngineering/`, `src/HarnessEngineering/`, `src/LoopEngineering/`, `src/GraphEngineering/` | READMEs que apuntan a sus demos. | Guías por paradigma. |
 | `tests/ContextEngineering/` | Tests xUnit del word wrapping. | Describen el comportamiento del ejemplo. |
+| `tests/Minesweeper/` | Tests xUnit del Minesweeper. | Describen el comportamiento del juego. |
+| `docs/tools/` | Guía de instalación del MCP de Trello. | Setup de herramientas para las demos. |
 | `assets/images/`, `assets/diagrams/` | Imágenes y diagramas. | Recursos gráficos. |
 | `scripts/` | Scripts auxiliares. | Automatización de apoyo. |
 
 ## Estado actual de cada ejemplo
 
-| Paradigma           | Ejemplo                                   | Estado                    |
-| ------------------- | ----------------------------------------- | ------------------------- |
-| Prompt Engineering  | Construcción incremental mediante prompts | Preparación               |
-| Context Engineering | Word wrapping y evolución del contexto    | Implementado inicialmente |
-| Harness Engineering | Herramientas, reglas y validación         | Placeholder               |
-| Loop Engineering    | GitHub Issues, TDD y condición de salida  | Placeholder               |
-| Graph Engineering   | Agentes especializados y reviews          | Placeholder               |
+| Paradigma           | Ejemplo                                          | Estado                        |
+| ------------------- | ------------------------------------------------ | ----------------------------- |
+| Prompt Engineering  | Construcción incremental mediante prompts        | Preparación                   |
+| Context Engineering | Word wrapping y evolución del contexto           | Implementado inicialmente     |
+| Harness Engineering | Minesweeper + herramientas, reglas y validación  | Base lista (Minesweeper.Core) |
+| Loop Engineering    | Minesweeper + Trello, TDD y condición de salida  | Base lista + backlog de cards |
+| Graph Engineering   | Minesweeper + agentes especializados y reviews   | Base lista (Minesweeper.Core) |
+
+Las demos de Harness, Loop y Graph comparten el proyecto **Minesweeper**
+(consola .NET, 3 niveles de dificultad). El diseño y el backlog de features para
+construir en vivo están en [`docs/talk/minesweeper-demo.md`](docs/talk/minesweeper-demo.md).
 
 ## Requisitos
 
@@ -81,7 +88,19 @@ dotnet run --project src/ContextEngineering/WordWrap.Console
 
 # Ejecutar la consola con argumentos propios: "<texto>" <largoMáximo>
 dotnet run --project src/ContextEngineering/WordWrap.Console -- "un texto de ejemplo bastante largo" 15
+
+# Jugar al Minesweeper: dificultad b|i|e y seed opcional (tablero reproducible)
+dotnet run --project src/Minesweeper/Minesweeper.Console -- b 42
+# Comandos en juego: 'r <fila> <col>' revela, 'f <fila> <col>' marca, 'q' sale
 ```
+
+## Herramientas: MCP de Trello
+
+Las demos de Loop y Graph usan un tablero de **Trello** a través de un **MCP
+Server**. Para evitar credenciales en el repositorio, el MCP se instala a nivel
+**máquina/usuario** (no como config del proyecto), y las credenciales viven solo
+en tu equipo. La guía paso a paso está en
+[`docs/tools/trello-mcp-setup.md`](docs/tools/trello-mcp-setup.md).
 
 ## Advertencia sobre los ejemplos
 

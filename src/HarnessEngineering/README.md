@@ -1,7 +1,11 @@
-# Harness Engineering — código (placeholder)
+# Harness Engineering — código
 
-Aquí vivirá el código de la demo de **Harness Engineering**: herramientas, reglas
-y validación que enmarcan el trabajo del agente.
+La demo de **Harness Engineering** trabaja sobre el **Minesweeper** compartido
+(`src/Minesweeper/`): el "arnés" son las herramientas (tablero de Trello vía MCP,
+`dotnet build`, `dotnet test`), las reglas (`.editorconfig`, estilo de tests) y la
+validación (nada avanza si no compila y pasan los tests).
 
-> Placeholder documentado. Sin proyecto asociado en esta iteración.
-> Ver también [`prompts/03-harness-engineering/`](../../prompts/03-harness-engineering/).
+Ver el diseño completo en
+[`docs/talk/minesweeper-demo.md`](../../docs/talk/minesweeper-demo.md).
+
+> El código de la demo se construye en vivo sobre `Minesweeper.Core`.

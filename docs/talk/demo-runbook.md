@@ -26,30 +26,33 @@ huecos a definir.
 
 ---
 
+> Demos 3 a 5 comparten el proyecto **Minesweeper** (`src/Minesweeper/`).
+> Diseño y backlog: [`minesweeper-demo.md`](minesweeper-demo.md).
+
 ## Demo 3 — Harness Engineering
 
-- **Estado inicial:** _por definir._
-- **Objetivo:** _por definir_ (herramientas, reglas y validación como arnés del agente).
-- **Archivos / herramientas:** _por definir._
-- **Resultado esperado:** _por definir._
-- **Plan de contingencia:** _por definir._
+- **Estado inicial:** `Minesweeper.Core` compilando y con tests en verde.
+- **Objetivo:** mostrar el "arnés" (herramientas, reglas y validación) que hace que los cambios del agente sean seguros y verificables.
+- **Archivos / herramientas:** `src/Minesweeper/`, `tests/Minesweeper/`, `.editorconfig`, `dotnet build`/`dotnet test`, tablero de Trello (MCP).
+- **Resultado esperado:** un cambio pequeño aplicado dentro del arnés, que compila y mantiene los tests en verde.
+- **Plan de contingencia:** si algo rompe la build, mostrar cómo el arnés lo detecta y se revierte al último estado verde.
 
 ---
 
 ## Demo 4 — Loop Engineering
 
-- **Estado inicial:** _por definir._
-- **Objetivo:** _por definir_ (bucle autónomo con condición de salida: issues + TDD).
-- **Archivos / herramientas:** _por definir._
-- **Resultado esperado:** _por definir._
-- **Plan de contingencia:** _por definir._
+- **Estado inicial:** backlog de *cards* cargado en Trello (ver `minesweeper-demo.md`).
+- **Objetivo:** un bucle autónomo que toma una card, la implementa con **TDD** y la cierra cuando los tests pasan (condición de salida clara).
+- **Archivos / herramientas:** `src/Minesweeper/`, `tests/Minesweeper/`, Trello (MCP), `dotnet test`.
+- **Resultado esperado:** al menos una card (p. ej. *first-click safety*) implementada y movida a *Done* con tests nuevos en verde.
+- **Plan de contingencia:** si el bucle se traba, tomar una card más simple del backlog o mostrar el resultado ya versionado.
 
 ---
 
 ## Demo 5 — Graph Engineering
 
-- **Estado inicial:** _por definir._
-- **Objetivo:** _por definir_ (agentes especializados y reviews).
-- **Archivos / herramientas:** _por definir._
-- **Resultado esperado:** _por definir._
-- **Plan de contingencia:** _por definir._
+- **Estado inicial:** una card en *In Progress* lista para pasar por revisión.
+- **Objetivo:** agentes especializados (Dev, Reviewer, QA) colaborando con revisiones cruzadas y *human-in-the-loop* aprobando el merge.
+- **Archivos / herramientas:** `src/Minesweeper/`, `tests/Minesweeper/`, Trello (MCP), diff/PR.
+- **Resultado esperado:** una card que atraviesa Dev → Review → QA → Done con feedback visible entre agentes.
+- **Plan de contingencia:** si la coordinación se complica, reducir a dos roles (Dev + Reviewer) y narrar el resto.

@@ -53,6 +53,14 @@ TestResults/
 Thumbs.db
 desktop.ini
 
+# ---- Secrets / local env ----
+# Never commit credentials. Local MCP / tooling config lives on your machine,
+# not in the repo (see docs/tools/trello-mcp-setup.md).
+.env
+.env.local
+*.env
+.mcp.json
+
 # ---- Misc ----
 *.log
 *.tmp

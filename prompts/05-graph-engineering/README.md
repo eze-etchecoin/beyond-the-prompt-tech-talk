@@ -1,8 +1,10 @@
-# Graph Engineering — prompts (placeholder)
+# Graph Engineering — prompts
 
-Este directorio contendrá los prompts de la demo de **Graph Engineering**:
-coordinación de **agentes especializados** y **revisiones cruzadas** (un agente
-produce, otro revisa, etc.).
+Prompts de la demo de **Graph Engineering**, que trabaja sobre el **Minesweeper**
+(`src/Minesweeper/`): agentes especializados (Dev, Reviewer, QA) con revisiones
+cruzadas y *human-in-the-loop*.
 
-> Placeholder documentado. La demo y sus prompts se definirán de forma incremental.
-> Todavía no se diseña aquí el grafo de agentes ni sus roles concretos.
+Ver el diseño en
+[`docs/talk/minesweeper-demo.md`](../../docs/talk/minesweeper-demo.md).
+
+> Los prompts concretos se irán agregando a medida que se ensaye la demo.

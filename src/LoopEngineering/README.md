@@ -1,7 +1,9 @@
-# Loop Engineering — código (placeholder)
+# Loop Engineering — código
 
-Aquí vivirá el código de la demo de **Loop Engineering**: un bucle de trabajo
-autónomo con condición de salida clara (issues + TDD).
+La demo de **Loop Engineering** trabaja sobre el **Minesweeper** compartido
+(`src/Minesweeper/`): un bucle autónomo que toma *cards* del tablero de Trello,
+las implementa con **TDD** y las cierra cuando los tests pasan (condición de
+salida). El backlog de cards está en
+[`docs/talk/minesweeper-demo.md`](../../docs/talk/minesweeper-demo.md).
 
-> Placeholder documentado. Sin proyecto asociado en esta iteración.
-> Ver también [`prompts/04-loop-engineering/`](../../prompts/04-loop-engineering/).
+> El código de la demo se construye en vivo sobre `Minesweeper.Core`.

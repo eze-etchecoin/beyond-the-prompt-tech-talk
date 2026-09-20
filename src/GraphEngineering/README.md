@@ -1,7 +1,9 @@
-# Graph Engineering — código (placeholder)
+# Graph Engineering — código
 
-Aquí vivirá el código de la demo de **Graph Engineering**: agentes especializados
-y revisiones cruzadas.
+La demo de **Graph Engineering** trabaja sobre el **Minesweeper** compartido
+(`src/Minesweeper/`): agentes especializados (Dev, Reviewer, QA) que colaboran
+sobre las mismas *cards* con revisiones cruzadas y *human-in-the-loop* aprobando
+los merges. Ver el diseño en
+[`docs/talk/minesweeper-demo.md`](../../docs/talk/minesweeper-demo.md).
 
-> Placeholder documentado. Sin proyecto asociado en esta iteración.
-> Ver también [`prompts/05-graph-engineering/`](../../prompts/05-graph-engineering/).
+> El código de la demo se construye en vivo sobre `Minesweeper.Core`.
