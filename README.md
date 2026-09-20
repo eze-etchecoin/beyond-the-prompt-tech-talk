@@ -38,10 +38,11 @@ La charla recorre una evolución conceptual sobre cómo colaboramos con agentes 
 | `prompts/04-loop-engineering/` | Placeholder documentado. | Demo de Loop Engineering. |
 | `prompts/05-graph-engineering/` | Placeholder documentado. | Demo de Graph Engineering. |
 | `src/ContextEngineering/` | Solución de word wrapping (Core + Console). | Código base de la demo de contexto. |
-| `src/Minesweeper/` | Minesweeper (Core + Console), base compartida. | Demos de Harness, Loop y Graph. |
-| `src/PromptEngineering/`, `src/HarnessEngineering/`, `src/LoopEngineering/`, `src/GraphEngineering/` | READMEs que apuntan a sus demos. | Guías por paradigma. |
+| `src/Minesweeper/` | Minesweeper (Core + Console), **producto base canónico**. | Referencia desde la que se siembran los workspaces. |
+| `src/HarnessEngineering/`, `src/LoopEngineering/`, `src/GraphEngineering/` | **Workspaces aislados**: copia propia del juego (`Minesweeper.<Enfoque>.*`). | Un workspace por demo, no se pisan entre sí. |
+| `src/PromptEngineering/` | README de la demo interactiva de prompts. | Guía del paradigma. |
 | `tests/ContextEngineering/` | Tests xUnit del word wrapping. | Describen el comportamiento del ejemplo. |
-| `tests/Minesweeper/` | Tests xUnit del Minesweeper. | Describen el comportamiento del juego. |
+| `tests/Minesweeper/`, `tests/{Harness,Loop,Graph}Engineering/` | Tests xUnit del Minesweeper (base + por workspace). | Describen el comportamiento del juego. |
 | `docs/tools/` | Guía de instalación del MCP de Trello. | Setup de herramientas para las demos. |
 | `assets/images/`, `assets/diagrams/` | Imágenes y diagramas. | Recursos gráficos. |
 | `scripts/` | Scripts auxiliares. | Automatización de apoyo. |
@@ -52,13 +53,15 @@ La charla recorre una evolución conceptual sobre cómo colaboramos con agentes 
 | ------------------- | ------------------------------------------------ | ----------------------------- |
 | Prompt Engineering  | Construcción incremental mediante prompts        | Preparación                   |
 | Context Engineering | Word wrapping y evolución del contexto           | Implementado inicialmente     |
-| Harness Engineering | Minesweeper + herramientas, reglas y validación  | Base lista (Minesweeper.Core) |
-| Loop Engineering    | Minesweeper + Trello, TDD y condición de salida  | Base lista + backlog de cards |
-| Graph Engineering   | Minesweeper + agentes especializados y reviews   | Base lista (Minesweeper.Core) |
+| Harness Engineering | Minesweeper + herramientas, reglas y validación  | Workspace listo (AGENTS.md en vivo) |
+| Loop Engineering    | Minesweeper + Trello, TDD y condición de salida  | Workspace listo + backlog de cards  |
+| Graph Engineering   | Minesweeper + agentes especializados y reviews   | Workspace listo (agentes: futuro)   |
 
-Las demos de Harness, Loop y Graph comparten el proyecto **Minesweeper**
-(consola .NET, 3 niveles de dificultad). El diseño y el backlog de features para
-construir en vivo están en [`docs/talk/minesweeper-demo.md`](docs/talk/minesweeper-demo.md).
+Las demos de Harness, Loop y Graph parten del **Minesweeper** (consola .NET, 3
+niveles de dificultad): `src/Minesweeper/` es el producto base y cada enfoque
+tiene su **propio workspace** (copia aislada). El diseño, el modelo de workspaces
+y el backlog de features para construir en vivo están en
+[`docs/talk/minesweeper-demo.md`](docs/talk/minesweeper-demo.md).
 
 ## Requisitos
 

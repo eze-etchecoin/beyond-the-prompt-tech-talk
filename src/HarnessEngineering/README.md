@@ -1,11 +1,24 @@
-# Harness Engineering — código
+# Harness Engineering — workspace
 
-La demo de **Harness Engineering** trabaja sobre el **Minesweeper** compartido
-(`src/Minesweeper/`): el "arnés" son las herramientas (tablero de Trello vía MCP,
-`dotnet build`, `dotnet test`), las reglas (`.editorconfig`, estilo de tests) y la
-validación (nada avanza si no compila y pasan los tests).
+Este directorio es un **workspace aislado**: contiene su **propia copia** del
+Minesweeper (`Minesweeper.Core` + `Minesweeper.Console`, con tests en
+`tests/HarnessEngineering/`), sembrada desde el producto base `src/Minesweeper/`.
+Proyectos y namespaces llevan el prefijo `Minesweeper.Harness.*` para no chocar
+con las otras copias.
 
-Ver el diseño completo en
+La idea es abrir una ventana de Claude Code / VS Code sobre esta carpeta y
+trabajar acá sin afectar los demás enfoques.
+
+## Dinámica de la demo
+
+El "arnés" (lineamientos, herramientas y reglas para el agente) se va a definir
+**en vivo**: con un prompt (guardado en
+[`prompts/03-harness-engineering/`](../../prompts/03-harness-engineering/))
+generaremos un **`AGENTS.md`** en este workspace que fije cómo debe trabajar el
+agente (convenciones, `dotnet build`/`dotnet test`, uso del tablero de Trello,
+criterio de "no romper la build ni los tests").
+
+> El `AGENTS.md` **todavía no existe**: se crea como parte de la demostración.
+
+Ver el diseño general en
 [`docs/talk/minesweeper-demo.md`](../../docs/talk/minesweeper-demo.md).
-
-> El código de la demo se construye en vivo sobre `Minesweeper.Core`.

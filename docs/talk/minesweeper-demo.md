@@ -22,6 +22,30 @@ Ya implementado, compilando y con tests:
 > quedan como *backlog* para construirlas **en vivo** con el flujo agéntico. Si
 > implementáramos todo ahora, no quedaría nada para las demos de Loop y Graph.
 
+## Modelo de trabajo: un workspace por enfoque
+
+`src/Minesweeper/` es el **producto base canónico** (la referencia). Cada demo
+trabaja sobre su **propia copia aislada**, sembrada desde esa base, para que las
+demos no se pisen y cada una arranque de un estado fijo:
+
+| Enfoque | Workspace (src) | Tests | Proyectos / namespace |
+|---|---|---|---|
+| Harness | `src/HarnessEngineering/` | `tests/HarnessEngineering/` | `Minesweeper.Harness.*` |
+| Loop    | `src/LoopEngineering/`    | `tests/LoopEngineering/`    | `Minesweeper.Loop.*` |
+| Graph   | `src/GraphEngineering/`   | `tests/GraphEngineering/`   | `Minesweeper.Graph.*` |
+
+Dinámica prevista: se abre una ventana de Claude Code / VS Code por workspace, y
+cada uno corre su propia dinámica.
+
+- **Harness:** se crea **en vivo** un `AGENTS.md` (a partir de un prompt en
+  `prompts/03-harness-engineering/`) con los lineamientos, herramientas y reglas.
+- **Loop:** se reutiliza ese `AGENTS.md` y se hace trabajar al agente **en bucle**
+  sobre las *cards* de Trello (TDD + condición de salida).
+- **Graph:** más adelante se definen los agentes especializados y su interacción.
+
+> El tablero de Trello con las *cards* es el backlog común desde el que cada
+> workspace toma trabajo.
+
 ## Mapa de la demo a los tres enfoques
 
 ### 3. Harness Engineering — herramientas, reglas y validación
