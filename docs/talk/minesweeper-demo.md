@@ -88,8 +88,42 @@ y Graph. Cada una es una *card* con criterios de aceptación verificables por te
 | 6 | **Auto-flag / pistas** | Marcar automáticamente minas evidentes (modo asistido). |
 | 7 | **Render con colores** | Colorear números/banderas/minas en la consola. |
 | 8 | **Dificultad personalizada** | Permitir filas/columnas/minas custom validadas por `BoardSpec`. |
+| 9 | **Portear el Core a una app WPF** | Frontend WPF sobre el mismo `Core`, sin tocar el dominio. Cierre de la demo. |
 
 > El orden y el alcance son provisionales; se ajustarán al ensayar los tiempos.
+
+### Nota sobre la card 3 (contador de tiempo)
+
+El Core debe exponer el tiempo como **valor consultable** (p. ej. `Elapsed`
+calculado desde el timestamp del primer reveal), nunca como algo que "corre":
+sin `Timer`, sin bucle, sin hilo propio — ni en `Core` ni en la consola. Así la
+consola lo imprime cuando redibuja y un futuro WPF le pone un `DispatcherTimer`
+encima sin que el dominio se entere. Si esta regla se rompe, la card 9 se
+complica: conviene dejarla explícita en el `AGENTS.md` de cada workspace.
+
+### Card 9 — el port como cierre (y como prueba del arnés)
+
+El WPF va **al final, a propósito**. La consola es el entorno donde el agente
+tiene el loop de feedback cerrado: puede ejecutar, leer la salida y compararla
+con lo esperado. Una UI WPF le corta ese loop — solo le queda `dotnet test`. Por
+eso primero se madura el dominio donde el agente puede verificarse a sí mismo, y
+recién después se portea, cuando ya no hay lógica en juego.
+
+Además, el port **valida retroactivamente todo lo anterior**: si durante las
+demos se respetó "la lógica va en `Core`, la UI no", el port es casi mecánico; si
+se filtró lógica al `Program.cs`, queda expuesto al instante. Por eso sus
+criterios de aceptación son verificables sin ojos (`Core` sin cambios, tests
+intactos y en verde, build OK) y la validación visual queda como
+*human-in-the-loop* en el GATE 2.
+
+Se hace sobre **un solo workspace** — el de Graph, que es el último — no sobre
+los tres. La consola no se elimina: quedan dos frontends sobre un `Core`
+compartido, que es en sí un argumento a favor del arnés.
+
+El BA (`graph-analyst`) decide cuándo la card entra a *To Do*: la descripción
+lleva **precondiciones explícitas** (cards de dominio en Done, tests en verde,
+sin lógica en la capa de consola) para que pueda razonar por sí mismo si ya es
+elegible o si conviene priorizar antes las cards de dominio pendientes.
 
 ## Cómo correrlo
 

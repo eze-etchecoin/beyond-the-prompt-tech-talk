@@ -33,6 +33,9 @@ El `AGENTS.md` debe contener, claro y operativo:
    - graph-analyst (Analista Funcional / BA): lee "Backlog", prioriza, refina
      criterios y selecciona N historias; al final propone follow-ups creándolos
      en "Backlog" (triage humano, no a To Do). No escribe código.
+     Si una card declara precondiciones en su descripción, debe verificarlas
+     contra el estado real (tablero + código + tests) antes de proponerla; si no
+     se cumplen, la deja en "Backlog" y prioriza primero lo que las habilita.
    - graph-dev: implementa UNA historia con TDD en `graph/<card-slug>`.
    - graph-reviewer: revisa el diff (correctitud, estilo, convenciones, cobertura);
      devuelve "OK" o "CAMBIOS: <lista>". No implementa.
