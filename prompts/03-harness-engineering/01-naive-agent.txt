@@ -1,0 +1,7 @@
+// DEMO HARNESS — Paso 0: el "antes" (agente sin arnés)
+// Objetivo: mostrar en vivo qué hace un agente cuando solo le pedimos código,
+// sin lineamientos, sin plan, sin gates de validación ni criterio de cierre.
+// Corré esto en el workspace src/HarnessEngineering/ ANTES de existir AGENTS.md.
+
+Implementá "first-click safety" en el Minesweeper: que la primera celda revelada
+nunca sea una mina.

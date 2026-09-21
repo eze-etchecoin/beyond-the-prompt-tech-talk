@@ -1,0 +1,81 @@
+// DEMO HARNESS — Paso 1: construir el arnés (generar AGENTS.md)
+// Objetivo: pasar de "un agente que escribe código" a un ARNÉS con etapas por
+// las que atraviesa cada requerimiento, con validación y aprobación humana.
+// Corré esto en una ventana de Claude Code abierta sobre src/HarnessEngineering/.
+// Resultado esperado: el agente CREA el archivo AGENTS.md en la raíz de este
+// workspace. No implementa ninguna feature todavía.
+
+Vas a trabajar en este repositorio como un agente de ingeniería enmarcado por un
+"arnés": un proceso explícito con etapas, validaciones y puntos de aprobación
+humana. Tu primera tarea NO es escribir código de features, sino generar el
+archivo `AGENTS.md` en la raíz de este workspace que defina ese arnés.
+
+Antes de escribirlo, inspeccioná el contexto real del proyecto y basá el AGENTS.md
+en lo que encuentres (no inventes):
+- El código del juego en este workspace (Minesweeper.Core, Minesweeper.Console).
+- Los tests en tests/HarnessEngineering/ y su estilo (describen comportamiento).
+- Las convenciones del repo: .editorconfig, los .csproj (net10.0, nullable e
+  implicit usings), el uso de xUnit.
+- La documentación de la charla en docs/talk/ (especialmente minesweeper-demo.md)
+  y el tablero de Trello "Beyond The Prompt tech talk".
+
+El `AGENTS.md` debe contener, de forma clara y accionable:
+
+1. CONTEXTO Y ALCANCE
+   - Qué es este workspace y qué lo distingue (copia aislada del Minesweeper).
+   - Stack y convenciones a respetar (las que detectaste arriba).
+   - Restricciones: no introducir dependencias innecesarias, no secretos en el
+     repo, mantener la implementación simple y explicable.
+
+2. HERRAMIENTAS DISPONIBLES
+   - Build y test: `dotnet build` y `dotnet test` (deben quedar en verde).
+   - Ejecución: `dotnet run` de la consola para verificación manual.
+   - Git para el control de cambios.
+   - Trello vía MCP para tomar y cerrar cards (tablero "Beyond The Prompt tech
+     talk"). Recordá cargar la skill trello-use antes de usar las tools de Trello.
+
+3. EL ARNÉS: ETAPAS POR LAS QUE PASA CADA REQUERIMIENTO
+   Definí estas seis etapas, cada una con su objetivo, entradas, salidas y
+   criterio de avance:
+   a) Refinamiento del requerimiento — leer la card, aclarar criterios de
+      aceptación, detectar ambigüedades y HACER PREGUNTAS si falta una decisión
+      de producto o arquitectura. Reformular el alcance. Sin código.
+   b) Plan de implementación con validación — proponer el plan (archivos a tocar,
+      tests a agregar, enfoque, riesgos) y VALIDARLO contra las reglas y
+      convenciones. [GATE HUMANO] El plan requiere aprobación humana antes de
+      avanzar a implementación.
+   c) Implementación — TDD: primero tests que fallen que describan el
+      comportamiento, luego el código mínimo para pasarlos. Cambios acotados al
+      alcance de la card.
+   d) Testing — correr `dotnet build` y `dotnet test`; verificar los criterios de
+      aceptación y casos límite. Nada avanza si la build o los tests están en rojo.
+   e) Aprobación humana — presentar el diff y los resultados de tests para
+      revisión. [GATE HUMANO] Requiere OK explícito antes del cierre.
+   f) Cierre — al aprobar: hacer el commit en una rama por card llamada
+      `harness/<card-slug>` (creada desde `main`), con mensaje convencional (p. ej.
+      `feat: ...`), y mover la card correspondiente a la lista "Done" del tablero
+      de Trello vía MCP. Dejar un resumen de lo hecho (incluida la rama). No hay
+      remoto: el entregable es la rama local con el commit.
+
+4. GATES Y HUMAN-IN-THE-LOOP
+   - Marcá explícitamente los DOS puntos donde el agente DEBE frenar y esperar
+     aprobación humana: al final del Plan (b) y en Aprobación (e).
+   - En el resto de las etapas el agente avanza solo, pero siempre dentro de las
+     reglas.
+
+5. REGLAS / GUARDRAILS (no negociables)
+   - No romper la build ni los tests.
+   - No exceder el alcance de la card (sin refactors oportunistas no pedidos).
+   - Ante ambigüedad, preguntar en vez de asumir.
+   - Respetar el estilo del repo y de los tests existentes.
+   - No commitear secretos.
+
+6. DEFINITION OF DONE
+   - Criterios de aceptación de la card cumplidos y cubiertos por tests.
+   - `dotnet build` y `dotnet test` en verde.
+   - Aprobación humana registrada.
+   - Commit hecho y card movida a "Done".
+
+Escribí el AGENTS.md en español, conciso y operativo (que sirva como guía real de
+trabajo, no como texto decorativo). Cuando termines, mostrame un resumen de las
+etapas y los gates, y esperá indicaciones. No implementes ninguna feature aún.

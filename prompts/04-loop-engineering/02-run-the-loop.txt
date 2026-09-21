@@ -1,0 +1,16 @@
+// DEMO LOOP — Paso 2: disparar el bucle
+// Requisito: AGENTS.md ya adaptado a modo loop en src/LoopEngineering/ (paso 1).
+// Antes: promové en Trello las cards que quieras trabajar de "Backlog" a "To Do".
+// Corré esto en la ventana abierta sobre src/LoopEngineering/.
+
+Trabajá en MODO LOOP siguiendo el flujo definido en src/LoopEngineering/AGENTS.md.
+
+Iterá tomando cards de la lista "To Do" del tablero "Beyond The Prompt tech talk"
+hasta que quede VACÍA. Por cada card seguí el ciclo del AGENTS.md (rama
+`loop/<card-slug>`, TDD, build+test, cierre asíncrono en "In Review/Testing"), sin
+frenar a pedir aprobación humana. Si una card es ambigua o irrecuperable, marcala
+BLOQUEADA y seguí.
+
+Al terminar (cuando "To Do" quede vacía), frená y dame un resumen: cuántas cards
+quedaron LISTAS PARA REVISIÓN, cuántas BLOQUEADAS (con su razón), y las ramas
+generadas.

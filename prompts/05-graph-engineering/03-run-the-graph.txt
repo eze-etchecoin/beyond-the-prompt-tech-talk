@@ -1,0 +1,20 @@
+// DEMO GRAPH — Paso 3: disparar una pasada del grafo
+// Requisitos: AGENTS.md creado (paso 1) y subagentes graph-* creados (paso 2).
+// Corré esto como el ORQUESTADOR (agente root), con el workspace
+// src/GraphEngineering/ como área de código.
+
+Actuá como ORQUESTADOR del grafo y corré UNA pasada completa siguiendo el flujo de
+orquestación definido en src/GraphEngineering/AGENTS.md.
+
+Puntos a respetar (ya detallados en AGENTS.md):
+- Invocá a los subagentes graph-analyst, graph-dev, graph-reviewer y graph-qa;
+  ellos no se llaman entre sí, los ruteás vos.
+- Respetá los DOS gates humanos: GATE 1 (aprobar el plan del BA antes de mover
+  historias a "To Do") y GATE 2 (aprobar el merge de cada historia antes de
+  cerrarla en "Done"). No avances sin mi OK en esos puntos.
+- Ciclos Dev⇄Reviewer y Dev⇄QA con máximo 2 vueltas; si no converge, marcá la
+  historia BLOQUEADA y seguí.
+- Mantené el tablero "Beyond The Prompt tech talk" como fuente de verdad.
+
+Al terminar, dame el resumen: historias completadas y mergeadas, bloqueadas (con
+razón), ramas generadas y follow-ups creados en "Backlog".

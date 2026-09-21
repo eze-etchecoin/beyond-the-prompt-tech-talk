@@ -1,0 +1,60 @@
+// DEMO LOOP — Paso 1: adaptar el arnés a modo loop (editar AGENTS.md)
+// Objetivo: reutilizar el arnés de Harness pero convertirlo en un BUCLE
+// AUTÓNOMO que vacía "To Do", con validación automática y revisión asíncrona.
+// Requisito previo (manual): copiá el AGENTS.md creado en la demo de Harness a
+// la raíz de este workspace (src/LoopEngineering/AGENTS.md).
+// Corré esto en una ventana de Claude Code abierta sobre src/LoopEngineering/.
+// Resultado esperado: se ACTUALIZA AGENTS.md para modo loop. No se implementa
+// ninguna historia todavía.
+
+Ya existe un AGENTS.md en este workspace (copiado de la demo de Harness). Tu tarea
+es ADAPTARLO a modo LOOP, conservando las seis etapas (refinamiento → plan →
+implementación → testing → aprobación → cierre) pero cambiando cómo se validan y
+cómo interviene la persona. Aplicá estos cambios sobre el AGENTS.md:
+
+1. CONDICIÓN DE SALIDA (nuevo)
+   - El agente itera tomando cards de la lista "To Do" del tablero "Beyond The
+     Prompt tech talk" hasta que "To Do" quede VACÍA. Ese es el único criterio de
+     finalización.
+
+2. GATES: de humanos a automáticos
+   - Eliminá los dos gates humanos de Harness (Plan y Aprobación). En modo loop la
+     validación es AUTOMÁTICA: `dotnet build` y `dotnet test` en verde + autochequeo
+     de los criterios de aceptación de la card. El agente no frena a pedir OK.
+
+3. REVISIÓN HUMANA: asíncrona (no bloqueante)
+   - Al terminar una card, se deja en "In Review/Testing" con un comentario
+     "LISTO PARA REVISIÓN: <resumen + rama + cómo probar>", y el loop sigue con la
+     siguiente. La persona revisa/mergea en paralelo. NO hay PR (el repo no tiene
+     remoto): el entregable de cada card es una RAMA local con el commit.
+
+4. RAMAS (una por card)
+   - Cada card se trabaja en su rama `loop/<card-slug>` creada desde `main`. Al
+     empezar una card se parte de `main`; al terminarla se vuelve a `main`. Una
+     card = una rama = un commit.
+
+5. CICLO POR CARD (documentalo en el AGENTS.md)
+   a. Tomar la card de más arriba de "To Do" (por posición) → mover a "In Progress".
+   b. Refinamiento: si es AMBIGUA o depende de una decisión que no se puede
+      resolver sola → mover a "In Review/Testing" con "BLOQUEADO: <razón>" y pasar a
+      la siguiente (sin crear rama).
+   c. Crear rama `loop/<card-slug>` desde `main`.
+   d. Implementación TDD acotada al alcance; luego `dotnet build` + `dotnet test`.
+   e. Cierre: si verde y criterios cumplidos → commit convencional en la rama,
+      volver a `main`, mover la card a "In Review/Testing" con "LISTO PARA
+      REVISIÓN...". Si no se puede completar → descartar cambios, volver a `main`
+      limpio, mover la card a "In Review/Testing" con "BLOQUEADO: <razón>".
+   f. Continuar con la siguiente card.
+
+6. MANEJO DE BLOQUEOS
+   - Saltear y anotar: las cards ambiguas o irrecuperables salen de "To Do" (van a
+     "In Review/Testing" con el comentario BLOQUEADO), así la condición de salida
+     siempre es alcanzable y el loop no se cuelga.
+
+7. GUARDRAILS (se mantienen)
+   - Nunca dejar un commit con build o tests en rojo. No exceder el alcance de la
+     card. Respetar el estilo del repo. No commitear secretos.
+
+Conservá lo que siga aplicando del AGENTS.md original y reescribí solo las
+secciones de gates/flujo/cierre. Al terminar, mostrame un resumen de qué cambió
+respecto del arnés de Harness. No implementes ninguna card todavía.

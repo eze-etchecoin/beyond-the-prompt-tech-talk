@@ -6,11 +6,13 @@ producto base `src/Minesweeper/`.
 
 ## Dinámica de la demo
 
-Sobre este workspace iremos definiendo **más adelante** varios agentes
-especializados (p. ej. Dev, Reviewer, QA) y **cómo interactúan entre sí**
-(hand-offs y revisiones cruzadas), con *human-in-the-loop* aprobando los merges.
+Un **orquestador** (agente root) coordina cuatro **subagentes especializados**
+(`.claude/agents/graph-*`): **Analista Funcional (BA)**, **Dev**, **Reviewer** y
+**QA**, con ciclos de feedback (Dev⇄Reviewer, Dev⇄QA) y dos **gates humanos**
+(aprobar el plan del BA y aprobar el merge final). El BA además crea historias
+nuevas en *Backlog* a partir de los entregables.
 
-> Los agentes y su orquestación se definirán en una iteración posterior.
+El grafo completo, los prompts y el flujo en vivo están en
+[`prompts/05-graph-engineering/`](../../prompts/05-graph-engineering/).
 
-Ver el diseño general en
-[`docs/talk/minesweeper-demo.md`](../../docs/talk/minesweeper-demo.md).
+Convención de ramas: `graph/<card-slug>` (coherente con `harness/` y `loop/`).

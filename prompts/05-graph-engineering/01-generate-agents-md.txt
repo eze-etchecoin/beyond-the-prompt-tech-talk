@@ -1,0 +1,74 @@
+// DEMO GRAPH — Paso 1: construir el arnés del grafo (generar AGENTS.md)
+// Objetivo: definir en un AGENTS.md los roles del grafo, sus dependencias, el
+// flujo de orquestación y los gates humanos. Es la fuente de verdad del grafo.
+// Corré esto en una ventana de Claude Code abierta sobre el repo, con el
+// workspace src/GraphEngineering/ como área de código.
+// Resultado esperado: se crea src/GraphEngineering/AGENTS.md. No se implementa
+// ninguna historia todavía, ni se crean subagentes aún (eso es el paso 2).
+
+Vas a montar un grafo de agentes especializados para desarrollar features del
+Minesweeper que vive en src/GraphEngineering/ (proyectos Minesweeper.Graph.*),
+usando el tablero de Trello "Beyond The Prompt tech talk".
+
+Tu tarea ahora NO es escribir código ni crear los subagentes, sino generar el
+archivo `AGENTS.md` en la raíz de este workspace (src/GraphEngineering/) que
+defina el grafo. Antes, inspeccioná el contexto real: el código del workspace,
+los tests en tests/GraphEngineering/, las convenciones (.editorconfig, .csproj,
+estilo de tests) y el tablero.
+
+El `AGENTS.md` debe contener, claro y operativo:
+
+1. CONTEXTO Y ALCANCE
+   - Qué es este workspace (copia aislada del Minesweeper) y el stack/convenciones.
+   - Guardrails comunes: no romper build/tests, no exceder el alcance de la
+     historia, respetar el estilo del repo, no commitear secretos.
+   - Convención de ramas: `graph/<card-slug>` (una por historia, desde `main`).
+   - El tablero de Trello es la fuente de verdad del estado de cada historia.
+
+2. ROLES DEL GRAFO
+   Definí el ORQUESTADOR (agente root: coordina, rutea y aplica los gates) y
+   cuatro agentes especializados que se implementarán como subagentes
+   (.claude/agents/graph-*) en el paso siguiente. Para cada uno: responsabilidad,
+   qué consume, qué produce y qué NO hace.
+   - graph-analyst (Analista Funcional / BA): lee "Backlog", prioriza, refina
+     criterios y selecciona N historias; al final propone follow-ups creándolos
+     en "Backlog" (triage humano, no a To Do). No escribe código.
+   - graph-dev: implementa UNA historia con TDD en `graph/<card-slug>`.
+   - graph-reviewer: revisa el diff (correctitud, estilo, convenciones, cobertura);
+     devuelve "OK" o "CAMBIOS: <lista>". No implementa.
+   - graph-qa: valida criterios y casos límite; corre build+test; devuelve "PASA"
+     o "FALLA: <detalle>".
+
+3. DEPENDENCIAS (el grafo, con sus ciclos)
+   - Backlog → graph-analyst → [GATE 1] → To Do.
+   - Orquestador toma la historia → graph-dev → graph-reviewer (⇄ Dev si pide
+     cambios) → graph-qa (⇄ Dev si falla) → [GATE 2] → Done.
+   - Cierre: graph-analyst crea follow-ups → Backlog.
+   - Los subagentes NO se invocan entre sí: cada uno hace su tarea y devuelve un
+     resultado estructurado al orquestador, que decide el siguiente paso.
+
+4. FLUJO DE ORQUESTACIÓN (una pasada)
+   a. Planificación: el orquestador invoca a graph-analyst para priorizar y
+      proponer N historias con criterios refinados. [GATE HUMANO 1] Espera
+      aprobación del plan; con el OK, el BA mueve las historias a "To Do".
+   b. Por cada historia (en orden): mover a "In Progress"; graph-dev implementa en
+      rama; graph-reviewer revisa (si "CAMBIOS", vuelve a Dev; máx. 2 vueltas);
+      con "OK", graph-qa valida (si "FALLA", vuelve a Dev; máx. 2 vueltas). Si un
+      ciclo no converge, marcar la historia BLOQUEADA (comentario en "In
+      Review/Testing") y continuar.
+   c. Con "PASA" de QA: [GATE HUMANO 2] mostrar diff + resultados y esperar
+      aprobación de merge; con el OK, mergear a `main` y mover la card a "Done".
+   d. Cierre de la pasada: graph-analyst propone follow-ups en "Backlog".
+
+5. GATES Y HUMAN-IN-THE-LOOP
+   - Marcá explícitamente los DOS puntos de parada: GATE 1 (aprobar el plan del
+     BA) y GATE 2 (aprobar el merge de cada historia). Sin OK, no se avanza.
+
+6. DEFINITION OF DONE (por historia)
+   - Criterios de aceptación cumplidos y cubiertos por tests.
+   - Reviewer "OK" y QA "PASA"; build+test en verde.
+   - Merge aprobado por la persona, rama mergeada y card en "Done".
+
+Escribí el AGENTS.md en español, conciso y accionable. Al terminar, mostrame un
+resumen de los roles, las dependencias y los dos gates. No crees subagentes ni
+implementes historias todavía.

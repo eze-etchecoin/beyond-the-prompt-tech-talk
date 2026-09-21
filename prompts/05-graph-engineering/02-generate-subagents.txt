@@ -1,0 +1,34 @@
+// DEMO GRAPH — Paso 2: crear los subagentes ejecutables
+// Objetivo: materializar los roles definidos en AGENTS.md como subagentes de
+// Claude Code en .claude/agents/. El flujo de orquestación y las dependencias ya
+// viven en AGENTS.md (paso 1); acá solo creamos las piezas.
+// Corré esto con AGENTS.md ya creado en src/GraphEngineering/.
+// Resultado esperado: 4 archivos en .claude/agents/. No se implementa nada.
+
+Leé src/GraphEngineering/AGENTS.md y creá los CUATRO subagentes descritos ahí como
+archivos en .claude/agents/, cada uno CONSISTENTE con los roles, dependencias y
+guardrails de ese documento. Cada subagente lleva frontmatter (name, description,
+tools, model: sonnet) y un system prompt claro y acotado a su rol. Recordá: los
+subagentes NO se invocan entre sí; hacen su tarea y devuelven un resultado
+estructurado al orquestador (que es el agente root, no un archivo).
+
+1) .claude/agents/graph-analyst.md  (Analista Funcional / BA)
+   - Tools: Trello (mcp__trello__*), Read, Grep, Glob.
+   - Devuelve: propuesta priorizada de historias (con justificación) y, al cierre,
+     los follow-ups creados en "Backlog".
+
+2) .claude/agents/graph-dev.md  (Dev)
+   - Tools: Read, Write, Edit, Bash (dotnet, git), Grep, Glob.
+   - Devuelve: rama `graph/<card-slug>` + resumen del cambio y los tests agregados.
+
+3) .claude/agents/graph-reviewer.md  (Reviewer de código)
+   - Tools: Read, Grep, Glob, Bash (git diff).
+   - Devuelve: "OK" o "CAMBIOS: <lista concreta>". No implementa.
+
+4) .claude/agents/graph-qa.md  (QA)
+   - Tools: Read, Bash (dotnet), Grep.
+   - Devuelve: "PASA" o "FALLA: <detalle>" con evidencia (salida de tests).
+
+En cada system prompt referenciá que el flujo global y los gates están definidos
+en AGENTS.md, e incluí los guardrails comunes. Cuando termines, mostrame el
+resumen de los 4 subagentes creados. No implementes ninguna historia todavía.
