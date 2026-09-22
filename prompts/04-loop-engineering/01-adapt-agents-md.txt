@@ -22,16 +22,17 @@ cómo interviene la persona. Aplicá estos cambios sobre el AGENTS.md:
      validación es AUTOMÁTICA: `dotnet build` y `dotnet test` en verde + autochequeo
      de los criterios de aceptación de la card. El agente no frena a pedir OK.
 
-3. REVISIÓN HUMANA: asíncrona (no bloqueante)
-   - Al terminar una card, se deja en "In Review/Testing" con un comentario
-     "LISTO PARA REVISIÓN: <resumen + rama + cómo probar>", y el loop sigue con la
-     siguiente. La persona revisa/mergea en paralelo. NO hay PR (el repo no tiene
-     remoto): el entregable de cada card es una RAMA local con el commit.
+3. REVISIÓN HUMANA: asíncrona (no bloqueante) vía PR
+   - Al terminar una card, se pushea la rama y se abre un PR contra `main` (con
+     `gh pr create`); se deja la card en "In Review/Testing" con un comentario
+     "LISTO PARA REVISIÓN: <resumen + link al PR + cómo probar>", y el loop sigue
+     con la siguiente. La persona revisa y mergea el PR en paralelo. El entregable
+     de cada card es un PR abierto contra `main` (el repo tiene remoto: `origin`).
 
-4. RAMAS (una por card)
+4. RAMAS Y PRs (una por card)
    - Cada card se trabaja en su rama `loop/<card-slug>` creada desde `main`. Al
-     empezar una card se parte de `main`; al terminarla se vuelve a `main`. Una
-     card = una rama = un commit.
+     empezar una card se parte de `main`; al terminarla se pushea la rama, se abre
+     el PR y se vuelve a `main`. Una card = una rama = un commit = un PR.
 
 5. CICLO POR CARD (documentalo en el AGENTS.md)
    a. Tomar la card de más arriba de "To Do" (por posición) → mover a "In Progress".
@@ -41,9 +42,10 @@ cómo interviene la persona. Aplicá estos cambios sobre el AGENTS.md:
    c. Crear rama `loop/<card-slug>` desde `main`.
    d. Implementación TDD acotada al alcance; luego `dotnet build` + `dotnet test`.
    e. Cierre: si verde y criterios cumplidos → commit convencional en la rama,
-      volver a `main`, mover la card a "In Review/Testing" con "LISTO PARA
-      REVISIÓN...". Si no se puede completar → descartar cambios, volver a `main`
-      limpio, mover la card a "In Review/Testing" con "BLOQUEADO: <razón>".
+      pushear y abrir el PR contra `main` (`gh pr create`), volver a `main`, mover
+      la card a "In Review/Testing" con "LISTO PARA REVISIÓN..." (incluí el link al
+      PR). Si no se puede completar → descartar cambios, volver a `main` limpio,
+      mover la card a "In Review/Testing" con "BLOQUEADO: <razón>" (sin PR).
    f. Continuar con la siguiente card.
 
 6. MANEJO DE BLOQUEOS

@@ -60,9 +60,10 @@ El "arnés" que enmarca al agente:
 ### 4. Loop Engineering — bucle con condición de salida (Trello + TDD)
 - El agente toma una *card* de Trello (una feature del backlog de abajo).
 - Aplica **TDD**: escribe/ajusta tests, implementa, corre `dotnet test`.
-- **Condición de salida:** la card está "hecha" cuando los tests pasan y el
-  criterio de aceptación se cumple; recién ahí mueve la card a *Done* y toma la
-  siguiente.
+- **Cierre de card:** cuando los tests pasan y el criterio se cumple, abre un
+  **PR** contra `main` y deja la card en *In Review/Testing*; el loop sigue con la
+  siguiente. La persona revisa y mergea los PRs en paralelo (revisión asíncrona).
+- **Condición de salida del loop:** que "To Do" quede vacía.
 - **Qué se muestra:** un bucle autónomo, acotado y observable a través del tablero.
 
 ### 5. Graph Engineering — agentes especializados y reviews
@@ -70,8 +71,11 @@ El "arnés" que enmarca al agente:
 - **Agente Reviewer:** revisa el diff (correctitud, estilo, cobertura).
 - **Agente QA:** valida criterios de aceptación / prueba casos límite.
 - Coordinación entre roles con *hand-offs* y revisiones cruzadas.
+- **Cierre:** con el visto de Reviewer y QA, el orquestador abre un **PR** contra
+  `main`; la persona (*human-in-the-loop*) lo aprueba y mergea (GATE 2). La review
+  de código la hacen los agentes; el PR es la aprobación humana sobre ese trabajo.
 - **Qué se muestra:** cómo varios agentes especializados colaboran sobre el mismo
-  Minesweeper, con la persona en el rol de *human-in-the-loop* aprobando merges.
+  Minesweeper, con la persona aprobando y mergeando el PR de cada historia.
 
 ## Backlog inicial (cards de Trello)
 

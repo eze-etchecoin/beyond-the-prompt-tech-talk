@@ -14,7 +14,7 @@ tech talk*, **reutilizando el `AGENTS.md`** que se creó en la demo de Harness.
 | --- | --- | --- |
 | Unidad de trabajo | una card | todas las de "To Do" |
 | Gates | 2 gates **humanos** (Plan y Aprobación) | validación **automática** (build+test) |
-| Revisión humana | síncrona (frena y espera) | **asíncrona** (deja la card en *In Review* y sigue) |
+| Revisión humana | síncrona (frena y espera) | **asíncrona** vía PR (abre el PR, deja la card en *In Review* y sigue) |
 | Fin | cierre de esa card | **"To Do" vacía** (condición de salida) |
 
 ## Cómo maneja los casos difíciles
@@ -22,10 +22,10 @@ tech talk*, **reutilizando el `AGENTS.md`** que se creó en la demo de Harness.
 - **Card ambigua o bloqueada** → la mueve a *In Review/Testing* con un comentario
   `BLOQUEADO: <razón>` y **continúa** (el loop no se cuelga).
 - **Card completada** → rama `loop/<card-slug>` desde `main` + un commit
-  convencional + card a *In Review/Testing* con `LISTO PARA REVISIÓN: <resumen +
-  rama + cómo probar>`. **No hay PR** (el repo no tiene remoto): el entregable es
-  la rama local.
-- La persona revisa/mergea las ramas **en paralelo**, sin frenar la iteración.
+  convencional + **PR contra `main`** (`gh pr create`) + card a *In Review/Testing*
+  con `LISTO PARA REVISIÓN: <resumen + link al PR + cómo probar>`. El entregable de
+  cada card es un PR abierto.
+- La persona revisa/mergea los PRs **en paralelo**, sin frenar la iteración.
 
 ## Prompts
 
@@ -39,9 +39,9 @@ tech talk*, **reutilizando el `AGENTS.md`** que se creó en la demo de Harness.
 1. Copiá el `AGENTS.md` generado en la demo de Harness a la raíz de este workspace.
 2. Corré `01-adapt-agents-md.txt` → adapta ese `AGENTS.md` a modo loop.
 3. Promové en Trello unas cuantas cards de *Backlog* a *To Do*.
-4. Corré `02-run-the-loop.txt` → el agente toma card por card, las deja en *In
-   Review/Testing* (listas o bloqueadas) y **se detiene solo** cuando *To Do*
-   queda vacía.
+4. Corré `02-run-the-loop.txt` → el agente toma card por card, abre un PR por cada
+   una completada, las deja en *In Review/Testing* (listas o bloqueadas) y **se
+   detiene solo** cuando *To Do* queda vacía.
 
 > El `AGENTS.md` no está versionado: se reutiliza el de Harness (copiado) y se
 > adapta en vivo. Mismo patrón que Graph (arnés en `AGENTS.md` + disparo fino).

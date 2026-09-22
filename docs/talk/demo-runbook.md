@@ -42,9 +42,9 @@ huecos a definir.
 ## Demo 4 — Loop Engineering
 
 - **Estado inicial:** backlog de *cards* cargado en Trello (ver `minesweeper-demo.md`).
-- **Objetivo:** un bucle autónomo que toma una card, la implementa con **TDD** y la cierra cuando los tests pasan (condición de salida clara).
-- **Archivos / herramientas:** `src/Minesweeper/`, `tests/Minesweeper/`, Trello (MCP), `dotnet test`.
-- **Resultado esperado:** al menos una card (p. ej. *first-click safety*) implementada y movida a *Done* con tests nuevos en verde.
+- **Objetivo:** un bucle autónomo que toma una card, la implementa con **TDD** y la deja lista para revisión (abre un PR) cuando los tests pasan; la condición de salida del loop es "To Do" vacía.
+- **Archivos / herramientas:** `src/LoopEngineering/`, `tests/LoopEngineering/`, Trello (MCP), `dotnet test`, git + `gh` (un PR por card).
+- **Resultado esperado:** al menos una card (p. ej. *first-click safety*) implementada, con su **PR abierto contra `main`** y la card en *In Review/Testing* (tests nuevos en verde). La persona mergea el PR en paralelo.
 - **Plan de contingencia:** si el bucle se traba, tomar una card más simple del backlog o mostrar el resultado ya versionado.
 
 ---
@@ -52,7 +52,7 @@ huecos a definir.
 ## Demo 5 — Graph Engineering
 
 - **Estado inicial:** una card en *In Progress* lista para pasar por revisión.
-- **Objetivo:** agentes especializados (Dev, Reviewer, QA) colaborando con revisiones cruzadas y *human-in-the-loop* aprobando el merge.
-- **Archivos / herramientas:** `src/Minesweeper/`, `tests/Minesweeper/`, Trello (MCP), diff/PR.
-- **Resultado esperado:** una card que atraviesa Dev → Review → QA → Done con feedback visible entre agentes.
+- **Objetivo:** agentes especializados (Dev, Reviewer, QA) colaborando con revisiones cruzadas y *human-in-the-loop* aprobando y mergeando el **PR** de cada historia (GATE 2).
+- **Archivos / herramientas:** `src/GraphEngineering/`, `tests/GraphEngineering/`, Trello (MCP), git + `gh` (PR en GATE 2), diff.
+- **Resultado esperado:** una card que atraviesa Dev → Review → QA → **PR** → Done, con feedback visible entre agentes y la persona aprobando/mergeando el PR. (Distinción clave: la review de código la hacen los agentes; el PR es la aprobación humana.)
 - **Plan de contingencia:** si la coordinación se complica, reducir a dos roles (Dev + Reviewer) y narrar el resto.

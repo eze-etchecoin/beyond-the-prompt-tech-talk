@@ -33,7 +33,7 @@ Backlog ──▶ graph-analyst ──▶ [GATE 1: aprobación del plan] ──�
                                                                   ▲            graph-qa
                                                        (falla) ───┴───────────────┤
                                                                                   ▼ (pasa)
-                                                            [GATE 2: aprobación de merge] ──▶ Done
+                                          [GATE 2: PR → aprobación humana → merge] ──▶ Done
                                                                                   │
                                                                                   ▼
                                             graph-analyst crea follow-ups ──▶ Backlog
@@ -42,7 +42,8 @@ Backlog ──▶ graph-analyst ──▶ [GATE 1: aprobación del plan] ──�
 - **Ciclos de feedback:** Dev⇄Reviewer y Dev⇄QA (máx. 2 vueltas; si no converge,
   la historia se marca BLOQUEADA y el grafo sigue).
 - **Human-in-the-loop:** GATE 1 (aprobar la selección/priorización del BA) y
-  GATE 2 (aprobar el merge final de cada historia).
+  GATE 2 (aprobar y mergear el **PR** de cada historia). Ojo: la review de código
+  la hacen los agentes (Reviewer + QA); el PR es la aprobación **humana** encima.
 - **Lazo grande:** el entregable retroalimenta el Backlog vía el BA — el sistema
   se genera trabajo nuevo (para triage humano).
 
@@ -59,8 +60,9 @@ Backlog ──▶ graph-analyst ──▶ [GATE 1: aprobación del plan] ──�
 1. Correr `01` → se crea `src/GraphEngineering/AGENTS.md` (el arnés del grafo).
 2. Correr `02` → se crean los subagentes `graph-*` (no se implementa nada aún).
 3. Correr `03` → el orquestador: pide plan al BA (GATE 1), y por cada historia
-   corre Dev → Reviewer → QA con feedback, frena en el merge (GATE 2), y al final
-   el BA propone follow-ups en Backlog.
+   corre Dev → Reviewer → QA con feedback, abre el PR y frena esperando tu
+   aprobación para mergearlo (GATE 2), y al final el BA propone follow-ups en
+   Backlog.
 
 > El `AGENTS.md` y los subagentes se crean en vivo como parte de la demo (pasos 1
 > y 2); no se pre-versionan. Convención de ramas coherente con las otras demos:

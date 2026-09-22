@@ -19,7 +19,7 @@ Refinamiento → Plan (GATE humano) → Implementación → Testing → Aprobaci
 - **Implementación** — TDD, cambios acotados a la card.
 - **Testing** — `dotnet build` + `dotnet test` en verde; verificar criterios y casos límite.
 - **Aprobación humana** — revisar diff + resultados. **Gate humano** antes del cierre.
-- **Cierre** — rama `harness/<card-slug>` + commit convencional + mover la card a *Done* en Trello (sin remoto: el entregable es la rama local).
+- **Cierre** — rama `harness/<card-slug>` + commit convencional + mover la card a *Done* en Trello. En esta demo el entregable es la rama local (no abrimos PR: la revisión ya ocurre en los dos gates; en un flujo de equipo, acá se abriría el PR).
 
 ## Prompts (orden de la demo)
 

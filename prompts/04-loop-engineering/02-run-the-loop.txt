@@ -7,10 +7,10 @@ Trabajá en MODO LOOP siguiendo el flujo definido en src/LoopEngineering/AGENTS.
 
 Iterá tomando cards de la lista "To Do" del tablero "Beyond The Prompt tech talk"
 hasta que quede VACÍA. Por cada card seguí el ciclo del AGENTS.md (rama
-`loop/<card-slug>`, TDD, build+test, cierre asíncrono en "In Review/Testing"), sin
-frenar a pedir aprobación humana. Si una card es ambigua o irrecuperable, marcala
-BLOQUEADA y seguí.
+`loop/<card-slug>`, TDD, build+test, y cierre asíncrono abriendo un PR contra
+`main` con la card en "In Review/Testing"), sin frenar a pedir aprobación humana.
+Si una card es ambigua o irrecuperable, marcala BLOQUEADA y seguí.
 
 Al terminar (cuando "To Do" quede vacía), frená y dame un resumen: cuántas cards
-quedaron LISTAS PARA REVISIÓN, cuántas BLOQUEADAS (con su razón), y las ramas
-generadas.
+quedaron LISTAS PARA REVISIÓN (con el link a su PR), cuántas BLOQUEADAS (con su
+razón), y las ramas/PRs generados.

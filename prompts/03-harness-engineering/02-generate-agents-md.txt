@@ -54,8 +54,10 @@ El `AGENTS.md` debe contener, de forma clara y accionable:
    f) Cierre — al aprobar: hacer el commit en una rama por card llamada
       `harness/<card-slug>` (creada desde `main`), con mensaje convencional (p. ej.
       `feat: ...`), y mover la card correspondiente a la lista "Done" del tablero
-      de Trello vía MCP. Dejar un resumen de lo hecho (incluida la rama). No hay
-      remoto: el entregable es la rama local con el commit.
+      de Trello vía MCP. Dejar un resumen de lo hecho (incluida la rama). En esta
+      demo el entregable es la rama local con el commit; no abrimos PR porque la
+      revisión ya ocurre en vivo etapa por etapa (en un flujo de equipo, este sería
+      el punto de abrir un PR contra `main`).
 
 4. GATES Y HUMAN-IN-THE-LOOP
    - Marcá explícitamente los DOS puntos donde el agente DEBE frenar y esperar
