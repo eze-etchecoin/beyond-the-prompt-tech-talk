@@ -1,0 +1,28 @@
+%% LOOP — bucle autonomo que vacia "To Do". Gates automaticos (build+test).
+%% Revision HUMANA ASINCRONA: cada card cierra abriendo un PR; la persona
+%% revisa y mergea en paralelo, sin frenar la iteracion.
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#F2ECE1','primaryBorderColor':'#8A7F6E','primaryTextColor':'#3D382F','lineColor':'#8A7F6E','tertiaryColor':'#FBF8F3','edgeLabelBackground':'#FBF8F3'}}}%%
+flowchart TD
+    Start(["Disparar el loop"]) --> Check{"¿'To Do' vacia?"}
+    Check -->|"si"| End(["Fin · resumen:<br/>PRs listos y bloqueos"])
+    Check -->|"no"| Take["Tomar card de mas arriba<br/>mover a In Progress"]:::step
+
+    Take --> Refine{"¿ambigua o<br/>irrecuperable?"}
+    Refine -->|"si"| Block["Card a In Review/Testing<br/>comentario BLOQUEADO<br/>(sin rama)"]:::blocked
+    Block --> Check
+
+    Refine -->|"no"| Branch["Rama loop/[card-slug] desde main"]:::step
+    Branch --> TDD["Implementacion TDD<br/>dotnet build + dotnet test"]:::step
+    TDD --> Gate{"¿verde y<br/>criterios OK?"}:::auto
+    Gate -->|"no"| Discard["Descartar cambios<br/>volver a main limpio<br/>card BLOQUEADO"]:::blocked
+    Discard --> Check
+    Gate -->|"si"| PR["Commit + abrir PR contra main<br/>card a In Review/Testing<br/>LISTO PARA REVISION"]:::pr
+    PR --> Check
+
+    Human["Persona<br/>revisa y mergea los PRs<br/>en paralelo"]:::human -.->|"asincrono"| PR
+
+    classDef step fill:#F2ECE1,stroke:#8A7F6E,color:#3D382F
+    classDef auto fill:#F5E0C4,stroke:#C68A3A,stroke-width:2px,color:#4A3512
+    classDef pr fill:#E4E6D0,stroke:#7E8A4E,stroke-width:2px,color:#333A12
+    classDef blocked fill:#F0D6CC,stroke:#B0553C,color:#4A1E12
+    classDef human fill:#FBDED4,stroke:#DD2C00,stroke-width:2px,color:#5A1500

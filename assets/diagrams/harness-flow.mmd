@@ -1,0 +1,19 @@
+%% HARNESS — el arnés: cada requerimiento atraviesa 6 etapas con 2 gates humanos.
+%% Revisión SÍNCRONA: el agente frena y espera aprobación en la terminal.
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#F2ECE1','primaryBorderColor':'#8A7F6E','primaryTextColor':'#3D382F','lineColor':'#8A7F6E','tertiaryColor':'#FBF8F3','edgeLabelBackground':'#FBF8F3'}}}%%
+flowchart TD
+    Card[("Card en To Do")]:::trello --> A
+
+    A["1 · Refinamiento<br/>leer card, aclarar criterios,<br/>preguntar ante ambiguedad"]:::stage
+    A --> B["2 · Plan<br/>archivos, tests, enfoque, riesgos<br/>validado contra las reglas"]:::stage
+    B --> G1{{"GATE HUMANO<br/>aprobar el plan"}}:::gate
+    G1 --> C["3 · Implementacion<br/>TDD, cambios acotados a la card"]:::stage
+    C --> D["4 · Testing<br/>dotnet build + dotnet test en verde<br/>verificar criterios y bordes"]:::stage
+    D --> E["5 · Aprobacion<br/>presentar diff + resultados"]:::stage
+    E --> G2{{"GATE HUMANO<br/>aprobar el cierre"}}:::gate
+    G2 --> F["6 · Cierre<br/>rama harness/[card-slug] + commit<br/>card a Done en Trello"]:::stage
+    F --> Done[("Card en Done")]:::trello
+
+    classDef stage fill:#F2ECE1,stroke:#8A7F6E,color:#3D382F
+    classDef gate fill:#FBDED4,stroke:#DD2C00,stroke-width:2px,color:#5A1500
+    classDef trello fill:#E7DAC1,stroke:#B39B6A,color:#4A3E28

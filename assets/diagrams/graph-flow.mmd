@@ -1,0 +1,29 @@
+%% GRAPH — grafo de agentes especializados coordinados por un orquestador.
+%% Review de AGENTES (reviewer + QA) + aprobacion HUMANA del PR en GATE 2.
+%% Los subagentes NO se llaman entre si: devuelven resultado al orquestador.
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#F2ECE1','primaryBorderColor':'#8A7F6E','primaryTextColor':'#3D382F','lineColor':'#8A7F6E','tertiaryColor':'#FBF8F3','edgeLabelBackground':'#FBF8F3'}}}%%
+flowchart TD
+    Backlog[("Backlog")]:::trello --> BA["graph-analyst · BA<br/>prioriza y refina, verifica precondiciones,<br/>selecciona N historias"]:::agent
+    BA --> G1{{"GATE 1<br/>aprobar el plan"}}:::gate
+    G1 --> ToDo[("To Do")]:::trello
+
+    ToDo --> Orq[["Orquestador · root<br/>rutea el trabajo y aplica los gates"]]:::orq
+    Orq --> Dev["graph-dev<br/>implementa 1 historia con TDD<br/>rama graph/[card-slug]"]:::agent
+    Dev --> Rev["graph-reviewer<br/>OK / CAMBIOS"]:::agent
+    Rev -->|"CAMBIOS · max 2 vueltas"| Dev
+    Rev -->|"OK"| QA["graph-qa<br/>build+test, criterios y bordes<br/>PASA / FALLA"]:::agent
+    QA -->|"FALLA · max 2 vueltas"| Dev
+    QA -->|"si no converge"| Blocked["Historia BLOQUEADA<br/>In Review/Testing"]:::blocked
+    QA -->|"PASA"| PR["Orquestador abre PR contra main<br/>veredictos de reviewer y QA en la descripcion"]:::pr
+
+    PR --> G2{{"GATE 2<br/>aprobar y mergear el PR"}}:::gate
+    G2 --> Done[("Done")]:::trello
+    Done --> Follow["graph-analyst<br/>propone follow-ups"]:::agent
+    Follow -.->|"triage humano"| Backlog
+
+    classDef trello fill:#E7DAC1,stroke:#B39B6A,color:#4A3E28
+    classDef agent fill:#F2ECE1,stroke:#8A7F6E,color:#3D382F
+    classDef orq fill:#F5E0C4,stroke:#C68A3A,stroke-width:2px,color:#4A3512
+    classDef gate fill:#FBDED4,stroke:#DD2C00,stroke-width:2px,color:#5A1500
+    classDef pr fill:#E4E6D0,stroke:#7E8A4E,stroke-width:2px,color:#333A12
+    classDef blocked fill:#F0D6CC,stroke:#B0553C,color:#4A1E12
