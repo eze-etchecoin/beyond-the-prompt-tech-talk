@@ -110,7 +110,7 @@ en tu equipo. La guía paso a paso está en
 Las demos de Harness, Loop y Graph dejan que un agente cree branches, abra PRs
 y las gestione con `gh`. **Antes de correr una demo vos mismo, forkeá este
 repo** — así los PRs/branches que genere el agente quedan en tu fork y no en
-el repo de la compañía. Paso a paso en
+el repo original. Paso a paso en
 [`docs/tools/github-setup.md`](docs/tools/github-setup.md).
 
 ## Advertencia sobre los ejemplos
