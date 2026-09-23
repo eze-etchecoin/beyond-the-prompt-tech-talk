@@ -96,6 +96,38 @@ public class GameTests
     }
 
     [Fact]
+    public void A_new_game_has_no_moves_yet()
+    {
+        var game = OneMineCorner();
+
+        Assert.Equal(0, game.MoveCount);
+    }
+
+    [Fact]
+    public void MoveCount_counts_reveals_and_flags_as_the_player_makes_them()
+    {
+        var game = OneMineCorner();
+
+        game.Reveal(0, 1); // adjacent to exactly one mine, does not end the game
+        Assert.Equal(1, game.MoveCount);
+
+        game.ToggleFlag(1, 1);
+        Assert.Equal(2, game.MoveCount);
+    }
+
+    [Fact]
+    public void MoveCount_stops_increasing_once_the_game_is_over()
+    {
+        var game = OneMineCorner();
+
+        game.Reveal(0, 0); // hits the mine, game is lost
+        Assert.Equal(1, game.MoveCount);
+
+        Assert.Throws<InvalidOperationException>(() => game.ToggleFlag(1, 1));
+        Assert.Equal(1, game.MoveCount);
+    }
+
+    [Fact]
     public void A_flagged_cell_cannot_be_revealed()
     {
         var game = OneMineCorner();

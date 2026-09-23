@@ -32,7 +32,7 @@ Console.WriteLine();
 while (game.State == GameState.InProgress)
 {
     Render(game, revealMines: false);
-    Console.Write($"Mines left: {game.RemainingMines}  > ");
+    Console.Write($"Mines left: {game.RemainingMines}  Moves: {game.MoveCount}  > ");
 
     var line = Console.ReadLine();
     if (line is null)

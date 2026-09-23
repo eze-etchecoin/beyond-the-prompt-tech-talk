@@ -34,6 +34,12 @@ public sealed class Game
     /// <summary>The number of cells currently flagged.</summary>
     public int FlagCount { get; private set; }
 
+    /// <summary>
+    /// Number of plays (reveals + flag toggles) made so far. Starts at zero when
+    /// the game is created and stops increasing once the game is won or lost.
+    /// </summary>
+    public int MoveCount { get; private set; }
+
     private Game(BoardSpec spec)
     {
         spec.Validate();
@@ -134,6 +140,7 @@ public sealed class Game
     public void Reveal(int row, int column)
     {
         EnsureInProgress();
+        MoveCount++;
 
         if (!InBounds(row, column))
         {
@@ -171,6 +178,7 @@ public sealed class Game
     public void ToggleFlag(int row, int column)
     {
         EnsureInProgress();
+        MoveCount++;
 
         if (!InBounds(row, column))
         {
