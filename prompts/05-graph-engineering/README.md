@@ -47,6 +47,11 @@ Backlog ──▶ graph-analyst ──▶ [GATE 1: aprobación del plan] ──�
 - **Lazo grande:** el entregable retroalimenta el Backlog vía el BA — el sistema
   se genera trabajo nuevo (para triage humano).
 
+> El tablero de Trello ya debería existir con su backlog (se crea **una sola
+> vez**, antes de la demo de Harness, con
+> [`prompts/00-shared/init-trello-board.txt`](../00-shared/init-trello-board.txt)).
+> Si estás corriendo Graph de forma independiente, corré ese prompt primero.
+
 ## Prompts
 
 | Orden | Archivo | Rol |

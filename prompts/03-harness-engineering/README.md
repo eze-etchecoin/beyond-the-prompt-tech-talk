@@ -21,6 +21,12 @@ Refinamiento → Plan (GATE humano) → Implementación → Testing → Aprobaci
 - **Aprobación humana** — revisar diff + resultados. **Gate humano** antes del cierre.
 - **Cierre** — rama `harness/<card-slug>` + commit convencional + mover la card a *Done* en Trello. En esta demo el entregable es la rama local (no abrimos PR: la revisión ya ocurre en los dos gates; en un flujo de equipo, acá se abriría el PR).
 
+> El tablero de Trello se inicializa **una sola vez**, antes de esta demo (es la
+> primera que lo usa), con
+> [`prompts/00-shared/init-trello-board.txt`](../00-shared/init-trello-board.txt) —
+> crea las 5 listas y las 9 cards del backlog. Loop y Graph reutilizan el mismo
+> tablero.
+
 ## Prompts (orden de la demo)
 
 | Orden | Archivo | Rol |
@@ -31,6 +37,9 @@ Refinamiento → Plan (GATE humano) → Implementación → Testing → Aprobaci
 
 ## Flujo sugerido en vivo
 
+0. (Una sola vez, antes de todo) Correr
+   `prompts/00-shared/init-trello-board.txt` → crea el tablero, las listas y las
+   cards del backlog en "Backlog".
 1. (Opcional) Correr `01` para mostrar el comportamiento sin arnés.
 2. Correr `02` → se crea `src/HarnessEngineering/AGENTS.md` (no se implementa nada aún).
 3. Promover en Trello una card de *Backlog* a *To Do*.

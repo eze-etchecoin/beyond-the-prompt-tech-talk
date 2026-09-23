@@ -1,0 +1,43 @@
+// DEMO — Paso 0 (compartido): inicializar el tablero de Trello con el backlog
+// Objetivo: crear (o completar) el tablero "Beyond The Prompt tech talk" con
+// las listas y las cards del backlog, listo para las demos de HARNESS, LOOP
+// y GRAPH (las tres usan el mismo tablero).
+// Requisito previo (manual): tener el MCP de Trello conectado y autenticado
+// (ver docs/tools/trello-mcp-setup.md) contra TU PROPIA cuenta/workspace.
+// Corré esto una sola vez, antes de la primera demo (Harness).
+// Resultado esperado: un tablero con 5 listas y 9 cards en "Backlog", ninguna
+// en "To Do" todavía (eso se promueve a mano en cada demo).
+
+Necesito que prepares el tablero de Trello para la demo de Minesweeper usando el
+MCP de Trello.
+
+1. BUSCAR O CREAR EL TABLERO
+   - Buscá si ya existe un tablero llamado "Beyond The Prompt tech talk" en mi
+     cuenta de Trello. Si existe, reutilizalo (no crees uno duplicado).
+   - Si no existe, creá uno nuevo con ese nombre.
+
+2. LISTAS (crealas si no existen, en este orden)
+   - Backlog
+   - To Do
+   - In Progress
+   - In Review/Testing
+   - Done
+
+3. CARDS DEL BACKLOG (crealas en la lista "Backlog", en este orden, si no existen
+   ya con ese título)
+   Tomá la tabla "Backlog inicial (cards de Trello)" de
+   docs/talk/minesweeper-demo.md y creá una card por fila, con:
+   - Título: el nombre de la feature (columna "Card").
+   - Descripción: el criterio de aceptación resumido (columna "Criterio de
+     aceptación"), tal cual está en la tabla.
+   Son 9 cards: First-click safety, Chording (revelar vecinos), Contador de
+   tiempo / movimientos, Detección de "sin banderas suficientes", Persistencia
+   de mejores tiempos, Auto-flag / pistas, Render con colores, Dificultad
+   personalizada, Portear el Core a una app WPF.
+
+4. NO PROMOVER NADA TODAVÍA
+   - Dejá las 9 cards en "Backlog". La promoción a "To Do" se hace a mano (o en
+     el disparo del loop) según cuánto tiempo/alcance se quiera mostrar en vivo.
+
+Al terminar, mostrame el link del tablero y la lista de cards creadas (o ya
+existentes, si reutilizaste el tablero).

@@ -27,6 +27,11 @@ tech talk*, **reutilizando el `AGENTS.md`** que se creó en la demo de Harness.
   cada card es un PR abierto.
 - La persona revisa/mergea los PRs **en paralelo**, sin frenar la iteración.
 
+> El tablero de Trello ya debería existir con su backlog (se crea **una sola
+> vez**, antes de la demo de Harness, con
+> [`prompts/00-shared/init-trello-board.txt`](../00-shared/init-trello-board.txt)).
+> Si estás corriendo Loop de forma independiente, corré ese prompt primero.
+
 ## Prompts
 
 | Orden | Archivo | Rol |

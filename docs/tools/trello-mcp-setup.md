@@ -48,10 +48,15 @@ claude mcp remove trello --scope user
 ## 4. Preparar el tablero
 
 Creá **tu propio** tablero de Trello para el desarrollo del Minesweeper (no
-reutilices el tablero personal de quien dio la charla) con, al menos, las
-listas: **Backlog**, **To Do**, **In Progress**, **In Review**, **Done**.
-El backlog inicial de *cards* está en
-[`../talk/minesweeper-demo.md`](../talk/minesweeper-demo.md).
+reutilices el tablero personal de quien dio la charla), con las listas
+**Backlog**, **To Do**, **In Progress**, **In Review/Testing**, **Done** y las
+*cards* del backlog inicial ([`../talk/minesweeper-demo.md`](../talk/minesweeper-demo.md)).
+
+No hace falta armarlo a mano: corré el prompt compartido
+[`../../prompts/00-shared/init-trello-board.txt`](../../prompts/00-shared/init-trello-board.txt)
+con el MCP ya conectado y el agente crea el tablero, las listas y las 9 cards.
+Se corre **una sola vez**, antes de la primera demo (Harness) — Loop y Graph
+reutilizan el mismo tablero.
 
 > El OAuth queda atado a **tu cuenta de Trello**, así que el agente solo va a
 > poder ver/editar tableros a los que vos tengas acceso — no hay forma de que
