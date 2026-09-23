@@ -119,4 +119,4 @@ el repo original. Paso a paso en
 
 ## Licencia
 
-**Pendiente de definición.** Todavía no se eligió una licencia para este repositorio.
+Distribuido bajo licencia [MIT](LICENSE).
