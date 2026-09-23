@@ -96,6 +96,19 @@ public class GameTests
     }
 
     [Fact]
+    public void Over_flagging_beyond_the_mine_count_makes_remaining_mines_negative()
+    {
+        var game = OneMineCorner();
+
+        game.ToggleFlag(0, 1);
+        game.ToggleFlag(1, 0);
+
+        Assert.Equal(2, game.FlagCount);
+        Assert.Equal(game.MineCount - 2, game.RemainingMines);
+        Assert.True(game.RemainingMines < 0);
+    }
+
+    [Fact]
     public void A_flagged_cell_cannot_be_revealed()
     {
         var game = OneMineCorner();
