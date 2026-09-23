@@ -139,4 +139,58 @@ public class GameTests
         Assert.Throws<ArgumentException>(
             () => Game.CreateWithMines(new BoardSpec(3, 3, 2), new[] { (0, 0), (0, 0) }));
     }
+
+    [Fact]
+    public void A_freshly_created_game_has_no_moves_and_no_elapsed_time()
+    {
+        var game = OneMineCorner();
+
+        Assert.Equal(0, game.MoveCount);
+        Assert.Null(game.Elapsed);
+    }
+
+    [Fact]
+    public void MoveCount_reflects_the_sequence_of_reveals_and_flags()
+    {
+        var game = OneMineCorner();
+
+        game.ToggleFlag(0, 0);
+        Assert.Equal(1, game.MoveCount);
+
+        game.ToggleFlag(0, 0);
+        Assert.Equal(2, game.MoveCount);
+
+        game.Reveal(0, 1);
+        Assert.Equal(3, game.MoveCount);
+    }
+
+    [Fact]
+    public void The_clock_starts_on_the_first_move_not_at_creation()
+    {
+        var now = new DateTimeOffset(2026, 1, 1, 0, 0, 0, TimeSpan.Zero);
+        var game = Game.CreateWithMines(new BoardSpec(3, 3, 1), new[] { (0, 0) }, () => now);
+
+        Assert.Null(game.Elapsed);
+
+        game.ToggleFlag(1, 1);
+        Assert.Equal(TimeSpan.Zero, game.Elapsed);
+
+        now = now.AddSeconds(5);
+        Assert.Equal(TimeSpan.FromSeconds(5), game.Elapsed);
+    }
+
+    [Fact]
+    public void The_clock_stops_once_the_game_is_won_or_lost()
+    {
+        var now = new DateTimeOffset(2026, 1, 1, 0, 0, 0, TimeSpan.Zero);
+        var game = Game.CreateWithMines(new BoardSpec(3, 3, 1), new[] { (0, 0) }, () => now);
+
+        game.Reveal(2, 2); // floods all safe cells and wins
+        Assert.Equal(GameState.Won, game.State);
+
+        var elapsedAtWin = game.Elapsed;
+        now = now.AddSeconds(30);
+
+        Assert.Equal(elapsedAtWin, game.Elapsed);
+    }
 }

@@ -34,12 +34,30 @@ public sealed class Game
     /// <summary>The number of cells currently flagged.</summary>
     public int FlagCount { get; private set; }
 
-    private Game(BoardSpec spec)
+    /// <summary>
+    /// The number of plays (reveals and flag toggles) made so far. Does not
+    /// count attempts on off-board coordinates or on a finished game, since
+    /// those are rejected before they reach the board.
+    /// </summary>
+    public int MoveCount { get; private set; }
+
+    /// <summary>
+    /// Time elapsed since the first play. Null until the first reveal or flag
+    /// toggle; stops advancing once the game is won or lost.
+    /// </summary>
+    public TimeSpan? Elapsed => _startedAt is null ? null : (_endedAt ?? _clock()) - _startedAt.Value;
+
+    private readonly Func<DateTimeOffset> _clock;
+    private DateTimeOffset? _startedAt;
+    private DateTimeOffset? _endedAt;
+
+    private Game(BoardSpec spec, Func<DateTimeOffset>? clock)
     {
         spec.Validate();
         Rows = spec.Rows;
         Columns = spec.Columns;
         MineCount = spec.MineCount;
+        _clock = clock ?? (() => DateTimeOffset.UtcNow);
 
         _cells = new Cell[Rows, Columns];
         for (var r = 0; r < Rows; r++)
@@ -52,17 +70,18 @@ public sealed class Game
     }
 
     /// <summary>Creates a game for one of the three canonical difficulty levels.</summary>
-    public static Game NewGame(Difficulty difficulty, Random? random = null) =>
-        NewGame(BoardSpec.FromDifficulty(difficulty), random);
+    public static Game NewGame(Difficulty difficulty, Random? random = null, Func<DateTimeOffset>? clock = null) =>
+        NewGame(BoardSpec.FromDifficulty(difficulty), random, clock);
 
     /// <summary>
     /// Creates a game for an arbitrary board spec, placing mines at random.
     /// Pass a seeded <see cref="Random"/> for a reproducible board (useful for
-    /// live demos and tests).
+    /// live demos and tests). Pass a <paramref name="clock"/> to control the
+    /// time source behind <see cref="Elapsed"/> (useful for tests).
     /// </summary>
-    public static Game NewGame(BoardSpec spec, Random? random = null)
+    public static Game NewGame(BoardSpec spec, Random? random = null, Func<DateTimeOffset>? clock = null)
     {
-        var game = new Game(spec);
+        var game = new Game(spec, clock);
         game.PlaceMinesRandomly(random ?? new Random());
         game.ComputeAdjacency();
         return game;
@@ -73,10 +92,11 @@ public sealed class Game
     /// for tests and worked examples.
     /// </summary>
     /// <exception cref="ArgumentException">Thrown when a coordinate is off-board or duplicated, or when the count does not match the spec.</exception>
-    public static Game CreateWithMines(BoardSpec spec, IEnumerable<(int Row, int Column)> mines)
+    public static Game CreateWithMines(
+        BoardSpec spec, IEnumerable<(int Row, int Column)> mines, Func<DateTimeOffset>? clock = null)
     {
         ArgumentNullException.ThrowIfNull(mines);
-        var game = new Game(spec);
+        var game = new Game(spec, clock);
 
         var placed = 0;
         foreach (var (row, column) in mines)
@@ -141,6 +161,8 @@ public sealed class Game
                 nameof(row), (row, column), "The coordinates are outside the board.");
         }
 
+        RecordMove();
+
         var cell = _cells[row, column];
         if (cell.IsRevealed || cell.IsFlagged)
         {
@@ -151,6 +173,7 @@ public sealed class Game
         {
             cell.IsRevealed = true;
             State = GameState.Lost;
+            StopClockIfGameOver();
             return;
         }
 
@@ -160,6 +183,8 @@ public sealed class Game
         {
             State = GameState.Won;
         }
+
+        StopClockIfGameOver();
     }
 
     /// <summary>
@@ -178,6 +203,8 @@ public sealed class Game
                 nameof(row), (row, column), "The coordinates are outside the board.");
         }
 
+        RecordMove();
+
         var cell = _cells[row, column];
         if (cell.IsRevealed)
         {
@@ -186,6 +213,20 @@ public sealed class Game
 
         cell.IsFlagged = !cell.IsFlagged;
         FlagCount += cell.IsFlagged ? 1 : -1;
+    }
+
+    private void RecordMove()
+    {
+        MoveCount++;
+        _startedAt ??= _clock();
+    }
+
+    private void StopClockIfGameOver()
+    {
+        if (State != GameState.InProgress)
+        {
+            _endedAt ??= _clock();
+        }
     }
 
     private void EnsureInProgress()
