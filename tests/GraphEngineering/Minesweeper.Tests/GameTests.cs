@@ -96,6 +96,22 @@ public class GameTests
     }
 
     [Fact]
+    public void Flagging_more_cells_than_mines_leaves_remaining_mines_negative_without_throwing()
+    {
+        var game = OneMineCorner(); // 1 mine on a 3x3 board
+
+        var exception = Record.Exception(() =>
+        {
+            game.ToggleFlag(0, 1);
+            game.ToggleFlag(0, 2);
+        });
+
+        Assert.Null(exception);
+        Assert.Equal(2, game.FlagCount);
+        Assert.Equal(-1, game.RemainingMines);
+    }
+
+    [Fact]
     public void A_flagged_cell_cannot_be_revealed()
     {
         var game = OneMineCorner();
