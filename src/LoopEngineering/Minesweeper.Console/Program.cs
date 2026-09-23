@@ -1,3 +1,4 @@
+using Minesweeper.Loop.Console;
 using Minesweeper.Loop.Core;
 
 // Minimal, deterministic console front-end for the Minesweeper demo.
@@ -114,6 +115,10 @@ static (bool Quit, bool Flag, int Row, int Column)? ParseCommand(string line)
 
 static void Render(Game game, bool revealMines)
 {
+    // Degrade elegantly when the terminal cannot render color (e.g. output is
+    // redirected or piped): fall back to the original plain glyphs.
+    var supportsColor = !Console.IsOutputRedirected;
+
     // Column headers (single digit, wrapping every 10 columns).
     Console.Write("    ");
     for (var c = 0; c < game.Columns; c++)
@@ -129,7 +134,7 @@ static void Render(Game game, bool revealMines)
         Console.Write($"{r,2} |");
         for (var c = 0; c < game.Columns; c++)
         {
-            Console.Write(Glyph(game.GetCell(r, c), revealMines));
+            WriteGlyph(game.GetCell(r, c), revealMines, supportsColor);
         }
 
         Console.WriteLine("|");
@@ -138,22 +143,19 @@ static void Render(Game game, bool revealMines)
     Console.WriteLine("   +" + new string('-', game.Columns) + "+");
 }
 
-static char Glyph(Cell cell, bool revealMines)
+static void WriteGlyph(Cell cell, bool revealMines, bool supportsColor)
 {
-    if (cell.IsFlagged && !cell.IsRevealed)
+    var glyph = CellRenderer.GetGlyph(cell, revealMines);
+    var color = supportsColor ? CellRenderer.GetColor(cell, revealMines) : null;
+
+    if (color is null)
     {
-        return 'F';
+        Console.Write(glyph);
+        return;
     }
 
-    if (!cell.IsRevealed)
-    {
-        return revealMines && cell.HasMine ? '*' : '.';
-    }
-
-    if (cell.HasMine)
-    {
-        return '*';
-    }
-
-    return cell.AdjacentMines == 0 ? ' ' : (char)('0' + cell.AdjacentMines);
+    var original = Console.ForegroundColor;
+    Console.ForegroundColor = color.Value;
+    Console.Write(glyph);
+    Console.ForegroundColor = original;
 }

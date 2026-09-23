@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\LoopEngineering\Minesweeper.Core\Minesweeper.Loop.Core.csproj" />
+    <ProjectReference Include="..\..\..\src\LoopEngineering\Minesweeper.Console\Minesweeper.Loop.Console.csproj" />
   </ItemGroup>
 
 </Project>
