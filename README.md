@@ -43,7 +43,7 @@ La charla recorre una evolución conceptual sobre cómo colaboramos con agentes 
 | `src/PromptEngineering/` | README de la demo interactiva de prompts. | Guía del paradigma. |
 | `tests/ContextEngineering/` | Tests xUnit del word wrapping. | Describen el comportamiento del ejemplo. |
 | `tests/Minesweeper/`, `tests/{Harness,Loop,Graph}Engineering/` | Tests xUnit del Minesweeper (base + por workspace). | Describen el comportamiento del juego. |
-| `docs/tools/` | Guía de instalación del MCP de Trello. | Setup de herramientas para las demos. |
+| `docs/tools/` | Guías de instalación del MCP de Trello y de GitHub CLI (`gh`). | Setup de herramientas para las demos. |
 | `assets/images/`, `assets/diagrams/` | Imágenes y diagramas. | Recursos gráficos. |
 | `scripts/` | Scripts auxiliares. | Automatización de apoyo. |
 
@@ -104,6 +104,14 @@ Server**. Para evitar credenciales en el repositorio, el MCP se instala a nivel
 **máquina/usuario** (no como config del proyecto), y las credenciales viven solo
 en tu equipo. La guía paso a paso está en
 [`docs/tools/trello-mcp-setup.md`](docs/tools/trello-mcp-setup.md).
+
+## Herramientas: GitHub CLI (`gh`)
+
+Las demos de Harness, Loop y Graph dejan que un agente cree branches, abra PRs
+y las gestione con `gh`. **Antes de correr una demo vos mismo, forkeá este
+repo** — así los PRs/branches que genere el agente quedan en tu fork y no en
+el repo de la compañía. Paso a paso en
+[`docs/tools/github-setup.md`](docs/tools/github-setup.md).
 
 ## Advertencia sobre los ejemplos
 

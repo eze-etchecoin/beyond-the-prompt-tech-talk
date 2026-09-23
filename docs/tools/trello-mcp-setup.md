@@ -47,10 +47,15 @@ claude mcp remove trello --scope user
 
 ## 4. Preparar el tablero
 
-Creá un tablero de Trello para el desarrollo del Minesweeper con, al menos, las
+Creá **tu propio** tablero de Trello para el desarrollo del Minesweeper (no
+reutilices el tablero personal de quien dio la charla) con, al menos, las
 listas: **Backlog**, **To Do**, **In Progress**, **In Review**, **Done**.
 El backlog inicial de *cards* está en
 [`../talk/minesweeper-demo.md`](../talk/minesweeper-demo.md).
+
+> El OAuth queda atado a **tu cuenta de Trello**, así que el agente solo va a
+> poder ver/editar tableros a los que vos tengas acceso — no hay forma de que
+> toque el tablero de otra persona por error.
 
 ## Alternativa: skill `trello-use`
 
