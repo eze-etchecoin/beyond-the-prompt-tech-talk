@@ -9,6 +9,8 @@ Vas a trabajar en este repositorio como un agente de ingeniería enmarcado por u
 "arnés": un proceso explícito con etapas, validaciones y puntos de aprobación
 humana. Tu primera tarea NO es escribir código de features, sino generar el
 archivo `AGENTS.md` en la raíz de este workspace que defina ese arnés.
+Ya existe un AGENTS.md base con la sección de Trello: extendelo y conservá esa
+sección tal cual.
 
 Antes de escribirlo, inspeccioná el contexto real del proyecto y basá el AGENTS.md
 en lo que encuentres (no inventes):

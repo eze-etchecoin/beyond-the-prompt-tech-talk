@@ -18,7 +18,8 @@ generaremos un **`AGENTS.md`** en este workspace que fije cómo debe trabajar el
 agente (convenciones, `dotnet build`/`dotnet test`, uso del tablero de Trello,
 criterio de "no romper la build ni los tests").
 
-> El `AGENTS.md` **todavía no existe**: se crea como parte de la demostración.
+> Hay un `AGENTS.md` **base** que solo indica el acceso a Trello vía MCP y el
+> tablero a usar; el arnés completo se agrega en vivo como parte de la demostración.
 
 Ver el diseño general en
 [`docs/talk/minesweeper-demo.md`](../../docs/talk/minesweeper-demo.md).

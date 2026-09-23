@@ -37,5 +37,6 @@ Refinamiento → Plan (GATE humano) → Implementación → Testing → Aprobaci
 4. Correr `03` → la card atraviesa las 6 etapas; el agente frena en Plan y en
    Aprobación esperando tu OK; al final commitea y mueve la card a *Done*.
 
-> El `AGENTS.md` **no está versionado en el repo**: se crea en vivo como parte de
+> En el repo solo está versionado un `AGENTS.md` **base** (acceso a Trello vía MCP
+> y tablero a usar); el arnés se agrega en vivo como parte de
 > la demostración (es justamente lo que muestra el paso 1).

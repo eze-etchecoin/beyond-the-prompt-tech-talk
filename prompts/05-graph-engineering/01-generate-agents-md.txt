@@ -12,7 +12,8 @@ usando el tablero de Trello "Beyond The Prompt tech talk".
 
 Tu tarea ahora NO es escribir código ni crear los subagentes, sino generar el
 archivo `AGENTS.md` en la raíz de este workspace (src/GraphEngineering/) que
-defina el grafo. Antes, inspeccioná el contexto real: el código del workspace,
+defina el grafo. Ya existe un AGENTS.md base con la sección de Trello:
+extendelo y conservá esa sección tal cual. Antes, inspeccioná el contexto real: el código del workspace,
 los tests en tests/GraphEngineering/, las convenciones (.editorconfig, .csproj,
 estilo de tests) y el tablero.
 

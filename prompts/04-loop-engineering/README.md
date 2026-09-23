@@ -43,5 +43,6 @@ tech talk*, **reutilizando el `AGENTS.md`** que se creó en la demo de Harness.
    una completada, las deja en *In Review/Testing* (listas o bloqueadas) y **se
    detiene solo** cuando *To Do* queda vacía.
 
-> El `AGENTS.md` no está versionado: se reutiliza el de Harness (copiado) y se
+> En el repo solo hay un `AGENTS.md` base (Trello vía MCP); en la demo se
+> reemplaza por el de Harness (copiado, que ya incluye esa sección) y se
 > adapta en vivo. Mismo patrón que Graph (arnés en `AGENTS.md` + disparo fino).
