@@ -139,4 +139,69 @@ public class GameTests
         Assert.Throws<ArgumentException>(
             () => Game.CreateWithMines(new BoardSpec(3, 3, 2), new[] { (0, 0), (0, 0) }));
     }
+
+    // Finds a seed for which the very first cell we intend to reveal is a mine,
+    // so the first-click relocation logic has something to actually relocate.
+    private static (Game Game, int Seed) NewGameWithMineAt(BoardSpec spec, int row, int column)
+    {
+        for (var seed = 0; seed < 10_000; seed++)
+        {
+            var game = Game.NewGame(spec, new Random(seed));
+            if (game.GetCell(row, column).HasMine)
+            {
+                return (game, seed);
+            }
+        }
+
+        throw new InvalidOperationException("No seed found that places a mine at the requested cell.");
+    }
+
+    [Fact]
+    public void Revealing_a_mine_on_the_first_click_relocates_it_and_keeps_the_game_going()
+    {
+        var spec = new BoardSpec(3, 3, 1);
+        var (game, _) = NewGameWithMineAt(spec, 1, 1);
+
+        game.Reveal(1, 1);
+
+        Assert.Equal(GameState.InProgress, game.State);
+        Assert.True(game.GetCell(1, 1).IsRevealed);
+        Assert.False(game.GetCell(1, 1).HasMine);
+    }
+
+    [Fact]
+    public void First_click_relocation_keeps_the_total_mine_count_unchanged()
+    {
+        var spec = new BoardSpec(3, 3, 1);
+        var (game, _) = NewGameWithMineAt(spec, 1, 1);
+
+        game.Reveal(1, 1);
+
+        var mines = 0;
+        for (var r = 0; r < game.Rows; r++)
+        {
+            for (var c = 0; c < game.Columns; c++)
+            {
+                if (game.GetCell(r, c).HasMine)
+                {
+                    mines++;
+                }
+            }
+        }
+
+        Assert.Equal(game.MineCount, mines);
+    }
+
+    [Fact]
+    public void CreateWithMines_is_not_affected_by_first_click_relocation()
+    {
+        // The mine stays exactly where it was placed even though it is the first reveal.
+        var game = OneMineCorner();
+
+        game.Reveal(0, 0);
+
+        Assert.Equal(GameState.Lost, game.State);
+        Assert.True(game.GetCell(0, 0).IsRevealed);
+        Assert.True(game.GetCell(0, 0).HasMine);
+    }
 }

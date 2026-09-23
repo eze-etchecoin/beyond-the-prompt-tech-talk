@@ -12,6 +12,8 @@ namespace Minesweeper.Graph.Core;
 public sealed class Game
 {
     private readonly Cell[,] _cells;
+    private Random? _random;
+    private bool _firstRevealPending;
 
     /// <summary>Number of rows on the board.</summary>
     public int Rows { get; }
@@ -63,8 +65,10 @@ public sealed class Game
     public static Game NewGame(BoardSpec spec, Random? random = null)
     {
         var game = new Game(spec);
-        game.PlaceMinesRandomly(random ?? new Random());
+        game._random = random ?? new Random();
+        game.PlaceMinesRandomly(game._random);
         game.ComputeAdjacency();
+        game._firstRevealPending = true;
         return game;
     }
 
@@ -147,6 +151,15 @@ public sealed class Game
             return;
         }
 
+        if (_firstRevealPending)
+        {
+            _firstRevealPending = false;
+            if (cell.HasMine)
+            {
+                RelocateMine(row, column);
+            }
+        }
+
         if (cell.HasMine)
         {
             cell.IsRevealed = true;
@@ -215,6 +228,29 @@ public sealed class Game
             _cells[row, column].HasMine = true;
             placed++;
         }
+    }
+
+    /// <summary>
+    /// Moves the mine away from the given cell to another free cell on the board
+    /// (first-click safety), then recomputes adjacency counts for every cell.
+    /// </summary>
+    private void RelocateMine(int row, int column)
+    {
+        var random = _random ?? new Random();
+
+        int targetRow;
+        int targetColumn;
+        do
+        {
+            targetRow = random.Next(Rows);
+            targetColumn = random.Next(Columns);
+        }
+        while ((targetRow == row && targetColumn == column) || _cells[targetRow, targetColumn].HasMine);
+
+        _cells[row, column].HasMine = false;
+        _cells[targetRow, targetColumn].HasMine = true;
+
+        ComputeAdjacency();
     }
 
     private void ComputeAdjacency()
