@@ -5,7 +5,7 @@ exportada (por ejemplo, a **PDF**).
 
 ## Contenido actual
 
-- `Arquitecturas_para_agentes_IA_actualizada.pptx` — presentación de la charla
+- `presentation.pptx` — presentación de la charla
   (ya disponible dentro del directorio de trabajo al inicializar el repositorio).
 
 ## Notas
