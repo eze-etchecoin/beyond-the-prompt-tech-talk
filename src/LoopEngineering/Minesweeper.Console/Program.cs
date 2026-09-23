@@ -129,7 +129,7 @@ static void Render(Game game, bool revealMines)
         Console.Write($"{r,2} |");
         for (var c = 0; c < game.Columns; c++)
         {
-            Console.Write(Glyph(game.GetCell(r, c), revealMines));
+            WriteGlyph(game.GetCell(r, c), revealMines);
         }
 
         Console.WriteLine("|");
@@ -138,22 +138,58 @@ static void Render(Game game, bool revealMines)
     Console.WriteLine("   +" + new string('-', game.Columns) + "+");
 }
 
-static char Glyph(Cell cell, bool revealMines)
+// Colours numbers the classic Minesweeper way and highlights flags/mines.
+// Degrades to plain characters when output is redirected/piped (colour codes
+// would otherwise corrupt non-interactive output).
+static void WriteGlyph(Cell cell, bool revealMines)
+{
+    var (glyph, color) = Describe(cell, revealMines);
+    if (color is null || Console.IsOutputRedirected)
+    {
+        Console.Write(glyph);
+        return;
+    }
+
+    var original = Console.ForegroundColor;
+    Console.ForegroundColor = color.Value;
+    Console.Write(glyph);
+    Console.ForegroundColor = original;
+}
+
+static (char Glyph, ConsoleColor? Color) Describe(Cell cell, bool revealMines)
 {
     if (cell.IsFlagged && !cell.IsRevealed)
     {
-        return 'F';
+        return ('F', ConsoleColor.Yellow);
     }
 
     if (!cell.IsRevealed)
     {
-        return revealMines && cell.HasMine ? '*' : '.';
+        return revealMines && cell.HasMine ? ('*', ConsoleColor.Red) : ('.', null);
     }
 
     if (cell.HasMine)
     {
-        return '*';
+        return ('*', ConsoleColor.Red);
     }
 
-    return cell.AdjacentMines == 0 ? ' ' : (char)('0' + cell.AdjacentMines);
+    if (cell.AdjacentMines == 0)
+    {
+        return (' ', null);
+    }
+
+    return ((char)('0' + cell.AdjacentMines), NumberColor(cell.AdjacentMines));
 }
+
+// Classic Minesweeper number colours (1=blue .. 8=dark gray).
+static ConsoleColor NumberColor(int adjacentMines) => adjacentMines switch
+{
+    1 => ConsoleColor.Blue,
+    2 => ConsoleColor.Green,
+    3 => ConsoleColor.Red,
+    4 => ConsoleColor.DarkBlue,
+    5 => ConsoleColor.DarkRed,
+    6 => ConsoleColor.Cyan,
+    7 => ConsoleColor.Black,
+    _ => ConsoleColor.DarkGray
+};
