@@ -99,7 +99,7 @@ dotnet run --project src/Minesweeper/Minesweeper.Console -- b 42
 
 ## Herramientas: MCP de Trello
 
-Las demos de Loop y Graph usan un tablero de **Trello** a través de un **MCP
+Las demos de Harness, Loop y Graph usan un tablero de **Trello** a través de un **MCP
 Server**. Para evitar credenciales en el repositorio, el MCP se instala a nivel
 **máquina/usuario** (no como config del proyecto), y las credenciales viven solo
 en tu equipo. La guía paso a paso está en
