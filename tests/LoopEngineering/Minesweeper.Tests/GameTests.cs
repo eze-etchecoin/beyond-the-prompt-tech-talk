@@ -139,4 +139,58 @@ public class GameTests
         Assert.Throws<ArgumentException>(
             () => Game.CreateWithMines(new BoardSpec(3, 3, 2), new[] { (0, 0), (0, 0) }));
     }
+
+    [Fact]
+    public void Chording_with_correct_flags_reveals_the_unflagged_neighbours()
+    {
+        var game = OneMineCorner();
+        game.Reveal(0, 1); // numbered cell, AdjacentMines == 1
+        game.ToggleFlag(0, 0); // the actual mine
+
+        game.Chord(0, 1);
+
+        Assert.True(game.GetCell(0, 2).IsRevealed);
+        Assert.True(game.GetCell(1, 0).IsRevealed);
+        Assert.True(game.GetCell(1, 2).IsRevealed);
+        Assert.Equal(GameState.Won, game.State);
+    }
+
+    [Fact]
+    public void Chording_with_insufficient_flags_does_nothing()
+    {
+        var game = OneMineCorner();
+        game.Reveal(0, 1); // AdjacentMines == 1, no flags placed
+
+        game.Chord(0, 1);
+
+        Assert.False(game.GetCell(0, 0).IsRevealed);
+        Assert.False(game.GetCell(0, 2).IsRevealed);
+        Assert.False(game.GetCell(1, 0).IsRevealed);
+        Assert.False(game.GetCell(1, 2).IsRevealed);
+        Assert.Equal(GameState.InProgress, game.State);
+    }
+
+    [Fact]
+    public void Chording_with_a_misplaced_flag_can_lose_the_game()
+    {
+        var game = OneMineCorner();
+        game.Reveal(0, 1); // AdjacentMines == 1
+        game.ToggleFlag(1, 1); // wrong cell flagged, mine at (0,0) left unflagged
+
+        game.Chord(0, 1);
+
+        Assert.Equal(GameState.Lost, game.State);
+        Assert.True(game.GetCell(0, 0).IsRevealed);
+    }
+
+    [Fact]
+    public void Chording_on_an_unrevealed_cell_does_nothing()
+    {
+        var game = OneMineCorner();
+
+        game.Chord(0, 1);
+
+        Assert.False(game.GetCell(0, 1).IsRevealed);
+        Assert.Equal(GameState.InProgress, game.State);
+    }
 }

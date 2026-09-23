@@ -188,6 +188,63 @@ public sealed class Game
         FlagCount += cell.IsFlagged ? 1 : -1;
     }
 
+    /// <summary>
+    /// Chords a revealed, numbered cell: if the number of flagged neighbours
+    /// equals its <see cref="Cell.AdjacentMines"/>, reveals every unflagged,
+    /// unrevealed neighbour in one go (respecting flood fill). Does nothing if
+    /// the cell is not revealed or the flagged-neighbour count does not match.
+    /// If a flag was misplaced, this can reveal a mine and lose the game, same
+    /// as the classic behaviour.
+    /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the coordinates are off-board.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the game is already over.</exception>
+    public void Chord(int row, int column)
+    {
+        EnsureInProgress();
+
+        if (!InBounds(row, column))
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(row), (row, column), "The coordinates are outside the board.");
+        }
+
+        var cell = _cells[row, column];
+        if (!cell.IsRevealed)
+        {
+            return;
+        }
+
+        var neighbours = Neighbours(row, column).ToList();
+        var flagged = neighbours.Count(n => _cells[n.Row, n.Column].IsFlagged);
+        if (flagged != cell.AdjacentMines)
+        {
+            return;
+        }
+
+        foreach (var (r, c) in neighbours)
+        {
+            var neighbour = _cells[r, c];
+            if (neighbour.IsFlagged || neighbour.IsRevealed)
+            {
+                continue;
+            }
+
+            if (neighbour.HasMine)
+            {
+                neighbour.IsRevealed = true;
+                State = GameState.Lost;
+                return;
+            }
+
+            FloodReveal(r, c);
+        }
+
+        if (State == GameState.InProgress && AllSafeCellsRevealed())
+        {
+            State = GameState.Won;
+        }
+    }
+
     private void EnsureInProgress()
     {
         if (State != GameState.InProgress)
